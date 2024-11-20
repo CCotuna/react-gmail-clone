@@ -40,7 +40,7 @@ const Layout = () => {
     }
 
     return (
-        <div className="relative w-full h-screen">
+        <div className="relative w-full h-screen overflow-hidden">
             <div 
                 className="absolute top-0 left-0 w-full h-full bg-cover bg-center bg-no-repeat"
                 style={{
@@ -55,9 +55,11 @@ const Layout = () => {
                 <Sidebar />
                 <div className="flex-grow ms-4 me-2">
                     <Navigation />
-                    <div>
+                    <div className='flex mt-2'>
                         <NavigationPanel />
+                        <div className='w-full'>
                         <Outlet />
+                        </div>
                     </div>
                 </div>
             </div>

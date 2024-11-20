@@ -21,7 +21,7 @@ function NavigationPanel() {
 
     const menuItems = [
         { id: "inbox", icon: <MdInbox className="text-xl" />, label: "Mesaje primite", count: 123 },
-        { id: "starred", icon: <MdStar className="text-xl" />, label: "Cu stea" },
+        { id: "starred", icon: <MdStar className="text-xl" />, label: "Cu stea", count: 15},
         { id: "snoozed", icon: <MdSnooze className="text-xl" />, label: "Amânate" },
         { id: "sent", icon: <MdSend className="text-xl" />, label: "Trimise" },
         { id: "drafts", icon: <MdDrafts className="text-xl" />, label: "Mesaje nefinalizate" },
@@ -30,7 +30,7 @@ function NavigationPanel() {
     const moreItems = [
         { id: "important", icon: <MdLabel className="text-xl" />, label: "Importante" },
         { id: "scheduled", icon: <IoMdTime className="text-xl" />, label: "Programate" },
-        { id: "all", icon: <IoMdMail className="text-xl" />, label: "Toate mesajele" },
+        { id: "all", icon: <IoMdMail className="text-xl" />, label: "Toate mesajele", count: 12344 },
         { id: "spam", icon: <RiSpam2Line className="text-xl" />, label: "Spam" },
         { id: "trash", icon: <IoMdTrash className="text-xl" />, label: "Coș de gunoi" },
         { id: "categories", icon: <FaRegFolderOpen className="text-xl" />, label: "Categorii" },
@@ -57,7 +57,7 @@ function NavigationPanel() {
     );
 
     return (
-        <div className="w-auto max-w-64 h-[100vh] mt-4 bg-transparent text-white space-y-5">
+        <div className="w-auto min-w-64 h-[calc(100vh-5rem)] mt-4 bg-transparent text-white space-y-5">
             <ComposeBtn />
 
             <div className="space-y-1">

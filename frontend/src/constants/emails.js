@@ -2,8 +2,8 @@ const emails = [
     {
         id: 1,
         sender: "Test",
-        title: "Meeting Reminder",
-        content: "Don't forget about the meeting at 10 AM tomorrow.",
+        title: "Meeting Reminder Meeting Reminder Meeting Reminder Meeting Reminder",
+        content: "Don't forget about the meeting at 10 AM tomorrow. Don't forget about the meeting at 10 AM tomorrow. Don't forget about the meeting at 10 AM tomorrow.",
         date: "2024-11-01",
         isChecked: true,
         isStarred: true,
