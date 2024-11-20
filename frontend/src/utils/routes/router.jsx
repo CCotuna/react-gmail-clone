@@ -9,6 +9,7 @@ import Inbox from '../../components/Inbox';
 import Chat from '../../components/Chat';
 
 import wallpaper from '../../assets/images/backgrounds/tempBg5.jpg';
+import NavigationPanel from '../../components/layout/navigation/NavigationPanel';
 
 const Router = () => {
     return (
@@ -52,9 +53,12 @@ const Layout = () => {
             
             <div className="flex z-10 relative">
                 <Sidebar />
-                <div className="flex-grow ms-5 me-2">
+                <div className="flex-grow ms-4 me-2">
                     <Navigation />
-                    <Outlet />
+                    <div>
+                        <NavigationPanel />
+                        <Outlet />
+                    </div>
                 </div>
             </div>
         </div>
