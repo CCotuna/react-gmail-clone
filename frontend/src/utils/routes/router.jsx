@@ -7,6 +7,7 @@ import PreLoader from '../../components/layout/preloader/PreLoader';
 import AuthenticationForm from '../../components/AuthenticationForm';
 import Inbox from '../../components/Inbox';
 import Chat from '../../components/Chat';
+import Email from '../../components/Email';
 
 import wallpaper from '../../assets/images/backgrounds/tempBg5.jpg';
 import NavigationPanel from '../../components/layout/navigation/NavigationPanel';
@@ -18,6 +19,7 @@ const Router = () => {
                 <Route index element={<Inbox />} />
                 <Route path="mail" element={<Inbox />} />
                 <Route path="chat" element={<Chat />} />
+                <Route path="email-details" element={<Email />} />
             </Route>
             <Route path="/login" element={<AuthenticationForm />} />
         </Routes>
@@ -57,8 +59,10 @@ const Layout = () => {
                     <Navigation />
                     <div className='flex mt-2'>
                         <NavigationPanel />
-                        <div className='w-full'>
+                        
+                        <div className='flex'>
                         <Outlet />
+                        {/* <NavigationPanel /> */}
                         </div>
                     </div>
                 </div>

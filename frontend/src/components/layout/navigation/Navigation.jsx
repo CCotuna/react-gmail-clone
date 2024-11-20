@@ -9,11 +9,12 @@ import logo from '../../../assets/logo/gmailLogo.svg';
 function Navigation() {
     return (
         <header className="flex w-full items-center p-2 ps-0 pb-0 bg-transparent justify-between">
-          <div className="flex sm:mr-28 2xl:mr-0">
-          <img src={logo} alt="Gmail Logo" className="w-8 h-auto mr-2" />
+          <div className="flex space-x-36 justify-between">
+          <div className="flex items-center">
+          <img src={logo} alt="Gmail Logo" className="w-8 h-auto ms-2 mr-2" />
           <span className="text-2xl text-gray-300">Gmail</span>
           </div>
-            <div className="flex items-center w-1/2">
+            <div className="flex items-center w-[36rem]">
                 <div className="flex items-center bg-white bg-opacity-30 rounded-full w-full max-w-2xl px-4 py-3 text-white">
                     <span className="cursor-pointer">
                         <IoSearch className="text-xl" />
@@ -28,6 +29,7 @@ function Navigation() {
                     </span>
                 </div>
             </div>
+          </div>
 
             <div className="flex items-center justify-end space-x-4 text-white">
                 <div className="flex items-center bg-white bg-opacity-30 rounded-full px-4 py-3 space-x-2">

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { MdCheckBox, MdCheckBoxOutlineBlank, MdKeyboardArrowDown, MdLabelImportant, MdLabelImportantOutline, MdStar, MdStarBorder } from "react-icons/md";
 import emailsData from "../constants/emails";
 
+import { Link } from 'react-router-dom';
+
 function Inbox() {
   const [emails, setEmails] = useState(emailsData);
 
@@ -30,7 +32,7 @@ function Inbox() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-5rem)] w-full p-6 bg-gray-50 rounded-2xl">
+    <div className="flex flex-col h-[calc(100vh-5rem)] p-6 bg-gray-50 rounded-2xl">
       {/* Header Section */}
       <div className="flex justify-between mb-2">
         <div className="flex items-center">
@@ -48,6 +50,7 @@ function Inbox() {
       <div className="flex-1 overflow-y-auto">
         <ul>
           {emails.map((email) => (
+            <Link to={'/email-details'} >
             <li
               key={email.id}
               className="flex justify-between border-b py-1 hover:shadow-lg hover:cursor-pointer hover:border-t"
@@ -100,6 +103,7 @@ function Inbox() {
                 <span>{email.date}</span>
               </div>
             </li>
+            </Link>
           ))}
         </ul>
       </div>
