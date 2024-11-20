@@ -60,7 +60,7 @@ const Layout = () => {
                     <div className='flex mt-2'>
                         <NavigationPanel />
                         
-                        <div className='flex'>
+                        <div className=' w-full'>
                         <Outlet />
                         {/* <NavigationPanel /> */}
                         </div>
