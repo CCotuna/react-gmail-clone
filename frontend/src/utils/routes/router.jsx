@@ -8,6 +8,8 @@ import AuthenticationForm from '../../components/AuthenticationForm';
 import Inbox from '../../components/Inbox';
 import Chat from '../../components/Chat';
 
+import wallpaper from '../../assets/images/backgrounds/tempBg2.jpg';
+
 const Router = () => {
     return (
         <Routes>
@@ -28,7 +30,7 @@ const Layout = () => {
         const timer = setTimeout(() => {
             setIsLoading(false);
         }, 1000);
-
+        
         return () => clearTimeout(timer); 
     }, []);
 
@@ -37,11 +39,23 @@ const Layout = () => {
     }
 
     return (
-        <div className="flex">
-            <Sidebar />
-            <div className="flex-grow">
-                <Navigation />
-                <Outlet />
+        <div className="relative w-full h-screen">
+            <div 
+                className="absolute top-0 left-0 w-full h-full bg-cover bg-center bg-no-repeat"
+                style={{
+                    backgroundImage: `url(${wallpaper})`,
+                    backgroundAttachment: 'fixed',
+                }}
+            />
+
+            <div className="absolute top-0 left-0 w-full h-full backdrop-blur-sm bg-opacity-10" />
+            
+            <div className="flex z-10 relative">
+                <Sidebar />
+                <div className="flex-grow">
+                    <Navigation />
+                    <Outlet />
+                </div>
             </div>
         </div>
     );

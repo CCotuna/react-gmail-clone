@@ -5,7 +5,6 @@ import Router from './utils/routes/router.jsx';
 function App() {
   return (
     <BrowserRouter>
-      Gmail Clone
       <Router />
     </BrowserRouter>
   );
