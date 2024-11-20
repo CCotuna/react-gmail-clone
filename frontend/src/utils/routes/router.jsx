@@ -8,7 +8,7 @@ import AuthenticationForm from '../../components/AuthenticationForm';
 import Inbox from '../../components/Inbox';
 import Chat from '../../components/Chat';
 
-import wallpaper from '../../assets/images/backgrounds/tempBg2.jpg';
+import wallpaper from '../../assets/images/backgrounds/tempBg5.jpg';
 
 const Router = () => {
     return (
@@ -52,7 +52,7 @@ const Layout = () => {
             
             <div className="flex z-10 relative">
                 <Sidebar />
-                <div className="flex-grow">
+                <div className="flex-grow ms-5 me-2">
                     <Navigation />
                     <Outlet />
                 </div>

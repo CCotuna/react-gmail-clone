@@ -4,13 +4,14 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { RiQuestionLine } from "react-icons/ri";
 import { AiFillSetting } from "react-icons/ai";
 import { TbGridDots } from "react-icons/tb";
-import logo from '../../../assets/logo/gmailFullLogo.png';
+import logo from '../../../assets/logo/gmailLogo.svg';
 
 function Navigation() {
     return (
         <header className="flex w-full items-center p-2 ps-0 pb-0 bg-transparent justify-between">
-          <div>
-          <img src={logo} alt="Gmail Logo" className="w-32 h-auto mr-4" /> {/* Gmail logo */}
+          <div className="flex">
+          <img src={logo} alt="Gmail Logo" className="w-8 h-auto mr-2" />
+          <span className="text-2xl text-gray-300">Gmail</span>
           </div>
             <div className="flex items-center w-1/2">
                

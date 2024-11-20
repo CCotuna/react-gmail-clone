@@ -7,7 +7,7 @@ function Sidebar() {
   return (
     <div className="bg-black bg-opacity-30 w-16 h-screen flex flex-col items-center space-y-3 text-white">
       {/* Menu Icon */}
-      <div className="text-2xl mb-8 mt-4 cursor-pointer p-3 rounded-full hover:bg-black hover:bg-opacity-20 transition duration-200 ease-in-out">
+      <div className="text-2xl mb-8 mt-2 cursor-pointer p-3 rounded-full hover:bg-black hover:bg-opacity-20 transition duration-200 ease-in-out">
         <div className="text-white"><IoMdMenu /></div>
       </div>
 
