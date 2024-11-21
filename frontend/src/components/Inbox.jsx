@@ -50,7 +50,6 @@ function Inbox() {
       <div className="flex-1 overflow-y-auto">
         <ul>
           {emails.map((email) => (
-            <Link to={'/email-details'} >
             <li
               key={email.id}
               className="flex justify-between border-b py-1 hover:shadow-lg hover:cursor-pointer hover:border-t"
@@ -87,23 +86,27 @@ function Inbox() {
                       <MdLabelImportantOutline className="text-xl text-gray-400" />
                     )}
                   </span>
+                  
+                  <Link to={'/email-details'} >
                   <span className="ml-2 text-sm font-semibold w-48 truncate">
                     {email.sender}
                   </span>
+                  </Link>
                 </div>
+                <Link to={'/email-details'} >
                 <div className="ml-6 flex text-sm">
                   <div className="font-medium w-full truncate flex">
-                    <span className="truncate max-w-96">{email.title}</span> - <span className=" max-w-96 truncate font-extralight">
+                    <span className="truncate max-w-96">{email.title}</span> - <span className="max-w-36 2xl:max-w-96 truncate font-extralight">
                     {email.content}
                     </span>
                   </div>
                 </div>
+                </Link>
               </div>
               <div className="ml-6 text-sm text-gray-400">
                 <span>{email.date}</span>
               </div>
             </li>
-            </Link>
           ))}
         </ul>
       </div>
