@@ -31,6 +31,25 @@ function Inbox() {
     );
   };
 
+  const formatEmailDate = (emailDate) => {
+    const currentYear = new Date().getFullYear();
+    const dateObj = new Date(emailDate);
+    const emailYear = dateObj.getFullYear();
+
+    if (emailYear === currentYear) {
+        return dateObj.toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "short",
+        });
+    } else {
+        return dateObj.toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+        });
+    }
+};
+
   return (
     <div className="flex flex-col h-[calc(100vh-5rem)] p-6 bg-gray-50 rounded-2xl">
       {/* Header Section */}
@@ -52,9 +71,9 @@ function Inbox() {
           {emails.map((email) => (
             <li
               key={email.id}
-              className="flex justify-between border-b py-1 hover:shadow-lg hover:cursor-pointer hover:border-t"
+              className="flex items-center justify-between border-b py-1 hover:shadow-lg hover:cursor-pointer hover:border-t"
             >
-              <div className="flex">
+              <div className="flex items-center">
                 <div className="flex items-center">
                   <span
                     className="cursor-pointer"
@@ -104,7 +123,7 @@ function Inbox() {
                 </Link>
               </div>
               <div className="ml-6 text-sm text-gray-400">
-                <span>{email.date}</span>
+                <span>{formatEmailDate(email.date)}</span>
               </div>
             </li>
           ))}
