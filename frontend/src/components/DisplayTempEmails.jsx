@@ -1,34 +1,43 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import { getDatabase, ref, onValue } from 'firebase/database';
 import app from '../firebase/firebaseConfig';
-import { getDatabase, ref, get } from 'firebase/database';
 
 function DisplayTempEmails() {
-  let [emails, setEmails] = useState([]);
-   
-  const fetchData = async () => {
+  const [emails, setEmails] = useState([]);
+
+  useEffect(() => {
     const db = getDatabase(app);
     const dbRef = ref(db, 'chat/test');
-    const snapshot = await get(dbRef);
-    if(snapshot.exists()){
-        setEmails(Object.values(snapshot.val()));
-    } else {
-        alert("No data available")
-    }
-  }
 
+    const unsubscribe = onValue(dbRef, (snapshot) => {
+      if (snapshot.exists()) {
+        setEmails(Object.values(snapshot.val()));
+      } else {
+        setEmails([]); 
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return (
     <div>
-    <button onClick={fetchData}>Display temp emails</button>
-    <ul>
-        {emails.map((email, index) => (
+      <h1>Temporary Emails</h1>
+      <ul>
+        {emails.length > 0 ? (
+          emails.map((email, index) => (
             <li key={index}>
-                <p>{email.user} : {email.message}</p>
+              <p>
+                <strong>{email.user}</strong>: {email.message}
+              </p>
             </li>
-        ))}
-    </ul>
+          ))
+        ) : (
+          <p>No emails available.</p>
+        )}
+      </ul>
     </div>
   );
-};
+}
 
 export default DisplayTempEmails;
