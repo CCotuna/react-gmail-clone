@@ -17,17 +17,20 @@ function Chat() {
     }).catch((error) => {
       alert('Data could not be saved' + error)});
   }
+  
   return (
-    <div>
+    <div className='flex flex-col space-y-5 w-96'>
     Write
     <input
       type="text"
+      className='text-black'
       value={inputValue1}
       onChange={(e) => setInputValue1(e.target.value)}
     />
     <br />
     <input
       type="text"
+      className='text-black'
       value={inputValue2}
       onChange={(e) => setInputValue2(e.target.value)}
     />

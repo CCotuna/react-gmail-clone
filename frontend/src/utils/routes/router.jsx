@@ -11,6 +11,7 @@ import Email from '../../components/Email';
 
 import wallpaper from '../../assets/images/backgrounds/tempBg5.jpg';
 import NavigationPanel from '../../components/layout/navigation/NavigationPanel';
+import DisplayTempEmails from '../../components/DisplayTempEmails';
 
 const Router = () => {
     return (
@@ -18,7 +19,12 @@ const Router = () => {
             <Route path="/" element={<Layout />}>
                 <Route index element={<Inbox />} />
                 <Route path="mail" element={<Inbox />} />
-                <Route path="chat" element={<Chat />} />
+                <Route path="chat" element={<>
+                    <div className='flex flex-col space-y-20 text-white'>
+                    <Chat />
+                    <DisplayTempEmails />
+                    </div>
+                    </>} />
                 <Route path="email-details" element={<Email />} />
             </Route>
             <Route path="/login" element={<AuthenticationForm />} />
