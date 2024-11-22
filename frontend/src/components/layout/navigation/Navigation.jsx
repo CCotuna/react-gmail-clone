@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-// import { logout } from "../../../utils/auth/authFunctions";
+import { logout } from "../../../utils/auth/authFunctions";
 
 import { IoSearch } from "react-icons/io5";
 import { RiSoundModuleFill, RiQuestionLine } from "react-icons/ri";
@@ -18,12 +18,12 @@ function Navigation() {
     const [isGoogleAppsOpen, setIsGoogleAppsOpen] = useState(false);
     const [isUserProfileOpen, setIsUserProfileOpen] = useState(false);
 
-    // const handleLogout = async () => {
-    //     const result = await logout();
-    //     if (!result.success) {
-    //         alert(result.error);
-    //     }
-    // };
+    const handleLogout = async () => {
+        const result = await logout();
+        if (!result.success) {
+            alert(result.error);
+        }
+    };
 
     return (
         <header className="flex w-full items-center p-2 ps-0 pb-0 bg-transparent justify-between">
@@ -84,7 +84,7 @@ function Navigation() {
                     <div className="w-10 h-10 rounded-full bg-white cursor-pointer"></div>
                     {isUserProfileOpen && (
                         <div className="absolute top-14 right-0 z-50">
-                            <UserProfile />
+                            <UserProfile handleLogout={handleLogout} />
                         </div>
                     )}
                 </div>

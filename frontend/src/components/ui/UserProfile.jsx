@@ -3,7 +3,7 @@ import { IoMdClose } from "react-icons/io";
 import { BsDot } from "react-icons/bs";
 import { getAuth } from 'firebase/auth';
 
-function UserProfile({ onClose }) {
+function UserProfile({ onClose, handleLogout }) {
     const [userEmail, setUserEmail] = useState('');
     const [domain, setDomain] = useState('');
 
@@ -36,7 +36,8 @@ function UserProfile({ onClose }) {
                     <button className='px-3 py-2 border border-white text-blue-200 rounded-full'>Gestioneaza-ti Contul Google</button>
                 </div>
                 <div className='flex justify-between items-center w-full bg-gray-950 text-white rounded-full py-3 px-5 mx-3 opacity-80'>
-                    <span>Afiseaza mai multe conturi</span>
+                    <span onClick={handleLogout}>Deconecteaza-te pentru moment</span>
+                    {/* <span>Afiseaza mai multe conturi</span> */}
                     <span>
                         <IoMdClose />
                     </span>
