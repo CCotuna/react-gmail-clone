@@ -4,14 +4,14 @@ import { MdOutlineChatBubble, MdOutlineChatBubbleOutline } from "react-icons/md"
 import { HiOutlineVideoCamera } from "react-icons/hi2";
 import { Link, useLocation } from "react-router-dom";
 
-function Sidebar() {
+function Sidebar({ setIsNavPanelOpen }) {
   const location = useLocation(); 
 
   return (
     <div className="bg-black bg-opacity-30 w-16 h-screen flex flex-col items-center space-y-3 text-white">
       {/* Menu Icon */}
       <div className="text-2xl mb-8 mt-2 cursor-pointer p-3 rounded-full hover:bg-gray-400 hover:bg-opacity-20 transition duration-200 ease-in-out">
-        <div className="text-white"><IoMdMenu /></div>
+        <div className="text-white" onClick={() => setIsNavPanelOpen(prev => !prev)}><IoMdMenu /></div>
       </div>
 
       {/* Email Icon */}

@@ -60,6 +60,7 @@ const Router = () => {
 
 const Layout = () => {
     const [isLoading, setIsLoading] = useState(true);
+    const [isNavPanelOpen, setIsNavPanelOpen] = useState(false);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -84,12 +85,16 @@ const Layout = () => {
             />
             <div className="absolute top-0 left-0 w-full h-full backdrop-blur-sm bg-opacity-10" />
             <div className="flex z-10 relative">
-                <Sidebar />
+                <Sidebar setIsNavPanelOpen={setIsNavPanelOpen} />
                 <div className="flex-grow ms-4 me-2">
                     <Navigation />
                     <div className="flex mt-2">
-                        <NavigationPanel />
-                        <div className="w-full">
+                        <div
+                            className={`transition-all duration-200 ease-in-out ${isNavPanelOpen ? 'w-64' : 'w-0'
+                                } overflow-hidden`}>
+                            <NavigationPanel />
+                        </div>
+                        <div className="flex-grow">
                             <Outlet />
                         </div>
                     </div>
