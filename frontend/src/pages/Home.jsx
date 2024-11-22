@@ -2,6 +2,7 @@ import React from 'react';
 
 import HomepageNavigation from '../components/layout/navigation/HomepageNavigation';
 import HeroSection from '../components/ui/HeroSection';
+import GeminiSection from '../components/ui/GeminiSection';
 
 function Home() {
   return (
@@ -9,6 +10,7 @@ function Home() {
       <HomepageNavigation />
       <div className='px-52'>
         <HeroSection/>
+        <GeminiSection/>
       </div>
     </div>
   );

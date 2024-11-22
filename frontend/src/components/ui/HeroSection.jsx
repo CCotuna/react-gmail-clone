@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import CreateAccountBtn from './CreateAccountBtn';
 
-import heroGmail from '../../assets/images/heroGmail.webp';
+import heroGmail from '../../assets/images/homepage/heroGmail.webp';
 
 function HeroSection() {
     return (
