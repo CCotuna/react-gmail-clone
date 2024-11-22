@@ -12,7 +12,7 @@ import { getDatabase, ref, onValue } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 import app from "../firebase/firebaseConfig";
 import { Link } from 'react-router-dom';
-import { toggleEmailField } from "../utils/emails/emailFunctions";
+import { toggleEmailField, permanentlyDeleteEmail } from "../utils/emails/emailFunctions";
 
 function Inbox({ filter }) {
   const [emails, setEmails] = useState([]);
@@ -198,7 +198,13 @@ function Inbox({ filter }) {
                     </span>
                     <span
                       className="cursor-pointer p-1 rounded-full hover:bg-gray-200 hover:text-gray-500 text-xl"
-                      onClick={() => toggleEmailField(email.id, 'deleted', email.deleted, setEmails, emails)}
+                      onClick={() => {
+                        if (filter === "trash") {
+                          permanentlyDeleteEmail(email.id, setEmails, emails);
+                        } else {
+                          toggleEmailField(email.id, 'deleted', email.deleted, setEmails, emails);
+                        }
+                      }}
                     >
                       <LiaTrashAlt />
                     </span>
