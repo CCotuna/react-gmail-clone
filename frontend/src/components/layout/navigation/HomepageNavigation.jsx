@@ -19,7 +19,7 @@ function HomepageNavigation() {
                         <Link>For work</Link>
                     </li>
                     <li className='text-blue-500 py-2 px-7 border rounded-md'>
-                        <Link>Sign In</Link>
+                        <Link to={'/login'}>Sign In</Link>
                     </li>
                     <CreateAccountBtn />
                 </ul>
