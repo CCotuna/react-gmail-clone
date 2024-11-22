@@ -4,6 +4,7 @@ import { getDatabase, ref, onValue, get } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 import app from "../firebase/firebaseConfig";
 import { Link } from 'react-router-dom';
+import { toggleEmailField } from "../utils/emails/emailFunctions";
 
 function Inbox() {
   const [emails, setEmails] = useState([]);
@@ -77,15 +78,6 @@ function Inbox() {
             year: "numeric",
         });
     }
-};
-
-  const toggleChecked = (id) => {
-  };
-
-  const toggleStarred = (id) => {
-  };
-
-  const toggleImportant = (id) => {
   };
 
   return (
@@ -113,7 +105,7 @@ function Inbox() {
                 <div className="flex items-center">
                   <span
                     className="cursor-pointer"
-                    onClick={() => toggleChecked(email.id)}
+                    onClick={() => toggleEmailField(email.id, 'checked', email.checked, setEmails, emails)}
                   >
                     {email.checked ? (
                       <MdCheckBox className="text-xl text-gray-700" />
@@ -123,7 +115,7 @@ function Inbox() {
                   </span>
                   <span
                     className="ml-3 cursor-pointer"
-                    onClick={() => toggleStarred(email.id)}
+                    onClick={() => toggleEmailField(email.id, 'star', email.star, setEmails, emails)}
                   >
                     {email.star ? (
                       <MdStar className="text-xl text-yellow-500" />
@@ -133,7 +125,7 @@ function Inbox() {
                   </span>
                   <span
                     className="ml-3 cursor-pointer"
-                    onClick={() => toggleImportant(email.id)}
+                    onClick={() => toggleEmailField(email.id, 'important', email.important, setEmails, emails)}
                   >
                     {email.important ? (
                       <MdLabelImportant className="text-xl text-yellow-500" />
