@@ -43,6 +43,7 @@ const Router = () => {
             >
                 <Route index element={<Inbox />} />
                 <Route path="mail" element={<Inbox />} />
+                <Route path="mail/:emailId" element={<Email />} />
                 <Route
                     path="chat"
                     element={
@@ -52,7 +53,6 @@ const Router = () => {
                         </div>
                     }
                 />
-                <Route path="email-details" element={<Email />} />
             </Route>
         </Routes>
     );

@@ -35,7 +35,7 @@ function Inbox() {
                   subject: messageData.subject,
                   message: messageData.message,
                   timestamp: new Date(messageData.timestamp).toLocaleString(),
-                  content: messageData.message.substring(0, 50),  // Show first 50 characters of the message
+                  content: messageData.message,
                   read: messageData.read,
                   checked: messageData.checked,
                   star: messageData.star,
@@ -60,27 +60,36 @@ function Inbox() {
     fetchEmails();
   }, [auth.currentUser?.email]);
 
-  // Format the date properly (you can customize this function further)
-  const formatEmailDate = (date) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-    return new Date(date).toLocaleDateString(undefined, options);
-  };
+  const formatEmailDate = (emailDate) => {
+    const currentYear = new Date().getFullYear();
+    const dateObj = new Date(emailDate);
+    const emailYear = dateObj.getFullYear();
+
+    if (emailYear === currentYear) {
+        return dateObj.toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "short",
+        });
+    } else {
+        return dateObj.toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+        });
+    }
+};
 
   const toggleChecked = (id) => {
-    // Your toggle logic here
   };
 
   const toggleStarred = (id) => {
-    // Your toggle logic here
   };
 
   const toggleImportant = (id) => {
-    // Your toggle logic here
   };
 
   return (
     <div className="flex flex-col h-[calc(100vh-5rem)] p-6 bg-gray-50 rounded-2xl">
-      {/* Header Section */}
       <div className="flex justify-between mb-2">
         <div className="flex items-center">
           <span className="cursor-pointer flex items-center">
@@ -93,7 +102,6 @@ function Inbox() {
         </div>
       </div>
 
-      {/* Emails List */}
       <div className="flex-1 overflow-y-auto">
         <ul>
           {emails.map((email) => (
@@ -134,13 +142,13 @@ function Inbox() {
                     )}
                   </span>
 
-                  <Link to={'/email-details'}>
+                  <Link to={`/mail/${email.id}`}>
                     <span className="ml-2 text-sm font-semibold w-48 truncate">
                       {email.sender}
                     </span>
                   </Link>
                 </div>
-                <Link to={'/email-details'}>
+                <Link to={`/mail/${email.id}`}>
                   <div className="ml-6 flex text-sm">
                     <div className="font-medium w-full truncate flex">
                       <span className="truncate max-w-96">{email.subject}</span> - <span className="max-w-36 2xl:max-w-96 truncate font-extralight">
