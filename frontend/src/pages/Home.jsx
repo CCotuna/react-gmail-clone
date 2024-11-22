@@ -6,6 +6,7 @@ import GeminiSection from '../components/ui/homepage/GeminiSection';
 import SecuritySection from '../components/ui/homepage/SecuritySection';
 import DownloadSection from '../components/ui/homepage/DownloadSection';
 import BenefitsSection from '../components/ui/homepage/BenefitsSection';
+import GoogleWorkspaceSection from '../components/ui/homepage/GoogleWorkspaceSection';
 
 function Home() {
   return (
@@ -17,6 +18,7 @@ function Home() {
         <SecuritySection />
         <DownloadSection />
         <BenefitsSection />
+        <GoogleWorkspaceSection />
       </div>
     </div>
   );
