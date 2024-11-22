@@ -1,35 +1,86 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdCheckBox, MdCheckBoxOutlineBlank, MdKeyboardArrowDown, MdLabelImportant, MdLabelImportantOutline, MdStar, MdStarBorder } from "react-icons/md";
-import emailsData from "../constants/emails";
-
+import { getDatabase, ref, get } from 'firebase/database';
+import { getAuth } from 'firebase/auth';
+import app from "../firebase/firebaseConfig";
 import { Link } from 'react-router-dom';
+import { toggleEmailField } from "../utils/emails/emailFunctions";
 
-function Inbox() {
-  const [emails, setEmails] = useState(emailsData);
+function Inbox({ filter }) {
+  const [emails, setEmails] = useState([]);
+  const [filteredEmails, setFilteredEmails] = useState([]);
+  const auth = getAuth();
 
-  const toggleChecked = (id) => {
-    setEmails((prevEmails) =>
-      prevEmails.map((email) =>
-        email.id === id ? { ...email, isChecked: !email.isChecked } : email
-      )
-    );
-  };
+  useEffect(() => {
+    const fetchEmails = async () => {
+      const db = getDatabase(app);
+      const email = auth.currentUser?.email;
 
-  const toggleStarred = (id) => {
-    setEmails((prevEmails) =>
-      prevEmails.map((email) =>
-        email.id === id ? { ...email, isStarred: !email.isStarred } : email
-      )
-    );
-  };
+      if (!email) return;
 
-  const toggleImportant = (id) => {
-    setEmails((prevEmails) =>
-      prevEmails.map((email) =>
-        email.id === id ? { ...email, isImportant: !email.isImportant } : email
-      )
-    );
-  };
+      const formattedEmail = email.replace(/\./g, '_').replace('@', '-');
+      const dbRef = ref(db, `emails/${formattedEmail}`);
+      const snapshot = await get(dbRef);
+
+      if (snapshot.exists()) {
+        const messages = [];
+        snapshot.forEach((messageSnapshot) => {
+          const messageData = messageSnapshot.val();
+
+          if (messageData.receiverEmail === email || messageData.senderEmail === email) {
+            messages.push({
+              id: messageSnapshot.key,
+              sender: messageData.senderEmail,
+              receiver: messageData.receiverEmail,
+              subject: messageData.subject,
+              message: messageData.message,
+              timestamp: new Date(messageData.timestamp).toLocaleString(),
+              content: messageData.message,
+              read: messageData.read,
+              checked: messageData.checked,
+              star: messageData.star,
+              important: messageData.important,
+              archived: messageData.archived,
+              sentByMe: messageData.sentByMe,
+              deleted: messageData.deleted
+            });
+          }
+        });
+
+        setEmails(messages);
+        setFilteredEmails(messages);
+      } else {
+        console.log(`Branch does not exist for: ${formattedEmail}`);
+        setEmails([]);
+        setFilteredEmails([]);
+      }
+    };
+
+    fetchEmails();
+  }, [auth.currentUser?.email]);
+
+  useEffect(() => {
+    let filtered = [...emails];
+
+    if (filter === "received") {
+      filtered = emails.filter(email => email.receiver === auth.currentUser?.email && email.sentByMe === false);
+    } else if (filter === "starred") {
+      filtered = emails.filter(email => email.star);
+    } else if (filter === "sent") {
+      filtered = emails.filter(email => email.sentByMe);
+    } else if (filter === "important") {
+      filtered = emails.filter(email => email.important);
+    } else if (filter === "trash") {
+      filtered = emails.filter(email => email.deleted);
+    } else if (filter === "archived") {
+      filtered = emails.filter(email => email.archived);
+    } else if (filter === "all") {
+      filtered = emails;
+    }
+
+    setFilteredEmails(filtered);
+  }, [filter, emails]);
+
 
   const formatEmailDate = (emailDate) => {
     const currentYear = new Date().getFullYear();
@@ -48,11 +99,10 @@ function Inbox() {
             year: "numeric",
         });
     }
-};
+  };
 
   return (
     <div className="flex flex-col h-[calc(100vh-5rem)] p-6 bg-gray-50 rounded-2xl">
-      {/* Header Section */}
       <div className="flex justify-between mb-2">
         <div className="flex items-center">
           <span className="cursor-pointer flex items-center">
@@ -61,14 +111,13 @@ function Inbox() {
           </span>
         </div>
         <div>
-          <span>1-{emails.length} din {emails.length}</span>
+          <span>1-{filteredEmails.length} din {emails.length}</span>
         </div>
       </div>
 
-      {/* Emails List */}
       <div className="flex-1 overflow-y-auto">
         <ul>
-          {emails.map((email) => (
+          {filteredEmails.map((email) => (
             <li
               key={email.id}
               className="flex items-center justify-between border-b py-1 hover:shadow-lg hover:cursor-pointer hover:border-t"
@@ -77,9 +126,9 @@ function Inbox() {
                 <div className="flex items-center">
                   <span
                     className="cursor-pointer"
-                    onClick={() => toggleChecked(email.id)}
+                    onClick={() => toggleEmailField(email.id, 'checked', email.checked, setEmails, emails)}
                   >
-                    {email.isChecked ? (
+                    {email.checked ? (
                       <MdCheckBox className="text-xl text-gray-700" />
                     ) : (
                       <MdCheckBoxOutlineBlank className="text-xl text-gray-400" />
@@ -87,9 +136,9 @@ function Inbox() {
                   </span>
                   <span
                     className="ml-3 cursor-pointer"
-                    onClick={() => toggleStarred(email.id)}
+                    onClick={() => toggleEmailField(email.id, 'star', email.star, setEmails, emails)}
                   >
-                    {email.isStarred ? (
+                    {email.star ? (
                       <MdStar className="text-xl text-yellow-500" />
                     ) : (
                       <MdStarBorder className="text-xl text-gray-400" />
@@ -97,33 +146,33 @@ function Inbox() {
                   </span>
                   <span
                     className="ml-3 cursor-pointer"
-                    onClick={() => toggleImportant(email.id)}
+                    onClick={() => toggleEmailField(email.id, 'important', email.important, setEmails, emails)}
                   >
-                    {email.isImportant ? (
+                    {email.important ? (
                       <MdLabelImportant className="text-xl text-yellow-500" />
                     ) : (
                       <MdLabelImportantOutline className="text-xl text-gray-400" />
                     )}
                   </span>
-                  
-                  <Link to={'/email-details'} >
-                  <span className="ml-2 text-sm font-semibold w-48 truncate">
-                    {email.sender}
-                  </span>
+
+                  <Link to={`/mail/${email.id}`}>
+                    <span className="ml-2 text-sm font-semibold w-48 truncate">
+                      {email.sender}
+                    </span>
                   </Link>
                 </div>
-                <Link to={'/email-details'} >
-                <div className="ml-6 flex text-sm">
-                  <div className="font-medium w-full truncate flex">
-                    <span className="truncate max-w-96">{email.title}</span> - <span className="max-w-36 2xl:max-w-96 truncate font-extralight">
-                    {email.content}
-                    </span>
+                <Link to={`/mail/${email.id}`}>
+                  <div className="ml-6 flex text-sm">
+                    <div className="font-medium w-full truncate flex">
+                      <span className="truncate max-w-96">{email.subject}</span> - <span className="max-w-36 2xl:max-w-96 truncate font-extralight">
+                        {email.content}
+                      </span>
+                    </div>
                   </div>
-                </div>
                 </Link>
               </div>
               <div className="ml-6 text-sm text-gray-400">
-                <span>{formatEmailDate(email.date)}</span>
+                <span>{formatEmailDate(email.timestamp)}</span>
               </div>
             </li>
           ))}
