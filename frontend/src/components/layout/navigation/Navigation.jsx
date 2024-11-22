@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { logout } from "../../../utils/auth/authFunctions";
 
@@ -9,11 +9,13 @@ import { AiFillSetting } from "react-icons/ai";
 import { TbGridDots } from "react-icons/tb";
 
 import logo from "../../../assets/logo/gmailLogo.svg";
+import GoogleApps from "../../ui/GoogleApps";
 
 import { Link } from "react-router-dom";
 
 function Navigation() {
-    
+    const [isGoogleAppsOpen, setIsGoogleAppsOpen] = useState(false);
+
     const handleLogout = async () => {
         const result = await logout();
         if (!result.success) {
@@ -25,10 +27,10 @@ function Navigation() {
         <header className="flex w-full items-center p-2 ps-0 pb-0 bg-transparent justify-between">
             <div className="flex space-x-36 justify-between">
                 <Link to={'/'} >
-                <div className="flex items-center">
-                    <img src={logo} alt="Gmail Logo" className="w-8 h-auto ms-2 mr-2" />
-                    <span className="text-2xl text-gray-300">Gmail</span>
-                </div>
+                    <div className="flex items-center">
+                        <img src={logo} alt="Gmail Logo" className="w-8 h-auto ms-2 mr-2" />
+                        <span className="text-2xl text-gray-300">Gmail</span>
+                    </div>
                 </Link>
                 <div className="flex items-center w-[36rem]">
                     <div className="flex items-center bg-white bg-opacity-30 rounded-full w-full max-w-2xl px-4 py-3 text-white">
@@ -54,10 +56,27 @@ function Navigation() {
                     <MdKeyboardArrowDown />
                 </div>
 
-                <RiQuestionLine className="text-2xl cursor-pointer" />
-                <AiFillSetting className="text-2xl cursor-pointer" />
-                <TbGridDots className="text-2xl cursor-pointer" />
-
+                <div className="relative group text-2xl cursor-pointer rounded-full">
+                    <RiQuestionLine />
+                    <span className="absolute -inset-2 rounded-full bg-gray-200 bg-opacity-20 scale-0 group-hover:scale-100 transition-transform duration-200 ease-in-out"></span>
+                </div>
+                <div className="relative group text-2xl cursor-pointer rounded-full">
+                    <AiFillSetting />
+                    <span className="absolute -inset-2 rounded-full bg-gray-200 bg-opacity-20 scale-0 group-hover:scale-100 transition-transform duration-200 ease-in-out"></span>
+                </div>
+                <div
+                    className="relative group text-2xl cursor-pointer rounded-full"
+                    onClick={() => setIsGoogleAppsOpen((prev) => !prev)}
+                >
+                    <TbGridDots />
+                    <span className="absolute -inset-2 rounded-full bg-gray-200 bg-opacity-20 scale-0 group-hover:scale-100 transition-transform duration-200 ease-in-out"></span>
+                    {isGoogleAppsOpen && (
+                        <div className="absolute top-12 left-1/2 -translate-x-1/2 z-50">
+                            <GoogleApps />
+                        </div>
+                    )}
+                </div>
+                
                 <div className="flex items-center space-x-2 p-1 rounded-lg border">
                     <span className='bg-white rounded-md text-gray-700 text-2xl p-1'>Google</span>
                     <div
