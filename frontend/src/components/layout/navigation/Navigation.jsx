@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { logout } from "../../../utils/auth/authFunctions";
+// import { logout } from "../../../utils/auth/authFunctions";
 
 import { IoSearch } from "react-icons/io5";
 import { RiSoundModuleFill, RiQuestionLine } from "react-icons/ri";
@@ -12,16 +12,18 @@ import logo from "../../../assets/logo/gmailLogo.svg";
 import GoogleApps from "../../ui/GoogleApps";
 
 import { Link } from "react-router-dom";
+import UserProfile from "../../ui/UserProfile";
 
 function Navigation() {
     const [isGoogleAppsOpen, setIsGoogleAppsOpen] = useState(false);
+    const [isUserProfileOpen, setIsUserProfileOpen] = useState(false);
 
-    const handleLogout = async () => {
-        const result = await logout();
-        if (!result.success) {
-            alert(result.error);
-        }
-    };
+    // const handleLogout = async () => {
+    //     const result = await logout();
+    //     if (!result.success) {
+    //         alert(result.error);
+    //     }
+    // };
 
     return (
         <header className="flex w-full items-center p-2 ps-0 pb-0 bg-transparent justify-between">
@@ -77,13 +79,20 @@ function Navigation() {
                     )}
                 </div>
 
-                <div className="flex items-center space-x-2 p-1 rounded-lg border">
-                    <span className='bg-white rounded-md text-gray-700 text-2xl p-1'>Google</span>
+                <div className="relative flex items-center space-x-2 p-1 rounded-lg border">
+                    <span className="bg-white rounded-md text-gray-700 text-2xl p-1">Google</span>
                     <div
                         className="w-10 h-10 rounded-full bg-white cursor-pointer"
-                        onClick={handleLogout}
+                        // onClick={handleLogout}
+                        onClick={() => setIsUserProfileOpen((prev) => !prev)}
                     ></div>
+                    {isUserProfileOpen && (
+                        <div className="absolute top-14 left-1/2 transform -translate-x-1/2 z-50">
+                            <UserProfile />
+                        </div>
+                    )}
                 </div>
+
             </div>
         </header>
     );
