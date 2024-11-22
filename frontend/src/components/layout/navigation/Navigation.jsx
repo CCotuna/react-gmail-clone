@@ -76,7 +76,7 @@ function Navigation() {
                         </div>
                     )}
                 </div>
-                
+
                 <div className="flex items-center space-x-2 p-1 rounded-lg border">
                     <span className='bg-white rounded-md text-gray-700 text-2xl p-1'>Google</span>
                     <div
