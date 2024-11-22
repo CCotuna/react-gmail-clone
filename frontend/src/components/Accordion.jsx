@@ -35,12 +35,12 @@ const Accordion = ({ data, imagePosition = 'left' }) => {
         <div className="max-w-xl text-left">
           {data.map((item, index) => (
             <div key={index} className="mb-4">
-              <button
+              <li
                 className="text-2xl text-gray-600 w-full text-left"
                 onClick={() => toggleAccordion(index)}
               >
                 {item.title}
-              </button>
+              </li>
               <div
                 className={`overflow-hidden transition-all duration-300 ease-in-out ${
                   activeIndex === index ? 'max-h-40' : 'max-h-0'
