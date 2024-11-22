@@ -79,15 +79,11 @@ function Navigation() {
                     )}
                 </div>
 
-                <div className="relative flex items-center space-x-2 p-1 rounded-lg border">
+                <div className="relative flex items-center space-x-2 p-1 rounded-lg border cursor-pointer" onClick={() => setIsUserProfileOpen((prev) => !prev)}>
                     <span className="bg-white rounded-md text-gray-700 text-2xl p-1">Google</span>
-                    <div
-                        className="w-10 h-10 rounded-full bg-white cursor-pointer"
-                        // onClick={handleLogout}
-                        onClick={() => setIsUserProfileOpen((prev) => !prev)}
-                    ></div>
+                    <div className="w-10 h-10 rounded-full bg-white cursor-pointer"></div>
                     {isUserProfileOpen && (
-                        <div className="absolute top-14 left-1/2 transform -translate-x-1/2 z-50">
+                        <div className="absolute top-14 right-0 z-50">
                             <UserProfile />
                         </div>
                     )}

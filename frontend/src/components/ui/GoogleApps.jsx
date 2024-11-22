@@ -43,7 +43,7 @@ const googleApps = [
 
 function GoogleApps() {
   return (
-    <div className="p-2 bg-gray-800 rounded-lg me-10">
+    <div className="p-2 bg-gray-800 rounded-2xl me-10">
       <div className="grid grid-cols-3 gap-2 p-4 bg-gray-950 rounded-xl shadow-md w-80 h-96 overflow-y-scroll">
         {googleApps.map((app, index) => (
           <div key={index} className="flex flex-col items-center justify-center">
