@@ -2,7 +2,7 @@ import gemini1 from "../assets/images/homepage/gemini1.png";
 import gemini2 from "../assets/images/homepage/gemini2.png";
 import gemini3 from "../assets/images/homepage/gemini3.png";
 
-const accordionData = [
+const geminiData = [
     {
       title: "Write better emails with the help of AI",
       content: "Gemini in Gmail can compose well-written drafts or replies for you to edit, personalize and quickly hit send.",
@@ -20,4 +20,4 @@ const accordionData = [
     },
   ];
 
-  export default accordionData;
+  export default geminiData;

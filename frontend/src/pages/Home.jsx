@@ -1,16 +1,18 @@
 import React from 'react';
 
 import HomepageNavigation from '../components/layout/navigation/HomepageNavigation';
-import HeroSection from '../components/ui/HeroSection';
-import GeminiSection from '../components/ui/GeminiSection';
+import HeroSection from '../components/ui/homepage/HeroSection';
+import GeminiSection from '../components/ui/homepage/GeminiSection';
+import SecuritySection from '../components/ui/homepage/SecuritySection';
 
 function Home() {
   return (
     <div>
       <HomepageNavigation />
-      <div className='px-52'>
+      <div className='px-52 space-y-20'>
         <HeroSection/>
         <GeminiSection/>
+        <SecuritySection />
       </div>
     </div>
   );
