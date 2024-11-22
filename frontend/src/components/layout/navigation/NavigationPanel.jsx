@@ -22,6 +22,7 @@ function NavigationPanel({ setFilter }) {
         { id: "scheduled", icon: <IoMdTime className="text-xl" />, label: "Programate" },
         { id: "all", icon: <IoMdMail className="text-xl" />, label: "Toate mesajele" },
         { id: "spam", icon: <RiSpam2Line className="text-xl" />, label: "Spam" },
+        { id: "archived", icon: <FaRegFolderOpen className="text-xl" />, label: "Arhivate" },
         { id: "trash", icon: <IoMdTrash className="text-xl" />, label: "Coș de gunoi" },
     ];
 

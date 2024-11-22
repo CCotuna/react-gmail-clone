@@ -70,26 +70,31 @@ function Inbox({ filter }) {
   }, [auth.currentUser?.email]);
 
   useEffect(() => {
-    let filtered = [...emails];
-
-    if (filter === "received") {
-      filtered = emails.filter(email => email.receiver === auth.currentUser?.email && email.sentByMe === false);
-    } else if (filter === "starred") {
-      filtered = emails.filter(email => email.star);
-    } else if (filter === "sent") {
-      filtered = emails.filter(email => email.sentByMe);
-    } else if (filter === "important") {
-      filtered = emails.filter(email => email.important);
-    } else if (filter === "trash") {
-      filtered = emails.filter(email => email.deleted);
-    } else if (filter === "archived") {
-      filtered = emails.filter(email => email.archived);
-    } else if (filter === "all") {
-      filtered = emails;
-    }
-
+    let filtered = emails.filter(email => {
+      if (filter !== "trash" && email.deleted) return false;
+      if (filter !== "archived" && email.archived) return false;
+  
+      if (filter === "received") {
+        return email.receiver === auth.currentUser?.email && email.sentByMe === false;
+      } else if (filter === "starred") {
+        return email.star;
+      } else if (filter === "sent") {
+        return email.sentByMe;
+      } else if (filter === "important") {
+        return email.important;
+      } else if (filter === "trash") {
+        return email.deleted;
+      } else if (filter === "archived") {
+        return email.archived;
+      } else if (filter === "all" || filter === "snoozed" || filter === "drafts" || filter === "scheduled" || filter === "spam") {
+        return true;
+      }
+  
+      return false;
+    });
+  
     setFilteredEmails(filtered);
-  }, [filter, emails]);
+  }, [filter, emails, auth.currentUser?.email]);
 
   const formatEmailDate = (emailDate) => {
     const currentYear = new Date().getFullYear();
@@ -120,7 +125,7 @@ function Inbox({ filter }) {
           </span>
         </div>
         <div>
-          <span>1-{filteredEmails.length} din {emails.length}</span>
+          <span>{filteredEmails.length} - {filteredEmails.length} din {filteredEmails.length}</span>
         </div>
       </div>
 
