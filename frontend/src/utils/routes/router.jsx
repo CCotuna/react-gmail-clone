@@ -14,6 +14,8 @@ import wallpaper from '../../assets/images/backgrounds/tempBg5.jpg';
 import NavigationPanel from '../../components/layout/navigation/NavigationPanel';
 import DisplayTempEmails from '../../components/DisplayTempEmails';
 
+import Home from '../../pages/Home.jsx'
+
 const Router = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -36,7 +38,7 @@ const Router = () => {
         <Routes>
             <Route
                 path="/login"
-                element={user ? <Navigate to="/" /> : <Authentication />}
+                element={user ? <Navigate to="/" /> : <Home />}
             />
             <Route
                 path="/"
