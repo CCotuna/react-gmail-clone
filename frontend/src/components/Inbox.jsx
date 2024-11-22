@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { MdCheckBox, MdCheckBoxOutlineBlank, MdKeyboardArrowDown, MdLabelImportant, MdLabelImportantOutline, MdStar, MdStarBorder } from "react-icons/md";
+
+import { RiInboxArchiveLine } from "react-icons/ri";
+import { LiaTrashAlt } from "react-icons/lia";
+
+import { MdOutlineMarkEmailUnread } from "react-icons/md";
+import { HiOutlineMailOpen } from "react-icons/hi";
+
+
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 import app from "../firebase/firebaseConfig";
@@ -9,6 +17,7 @@ import { toggleEmailField } from "../utils/emails/emailFunctions";
 function Inbox({ filter }) {
   const [emails, setEmails] = useState([]);
   const [filteredEmails, setFilteredEmails] = useState([]);
+  const [hoveredEmail, setHoveredEmail] = useState(null);
   const auth = getAuth();
 
   useEffect(() => {
@@ -48,7 +57,7 @@ function Inbox({ filter }) {
           });
 
           setEmails(messages);
-          setFilteredEmails(messages); 
+          setFilteredEmails(messages);
         } else {
           console.log(`Branch does not exist for: ${formattedEmail}`);
           setEmails([]);
@@ -58,7 +67,7 @@ function Inbox({ filter }) {
     };
 
     fetchEmails();
-  }, [auth.currentUser?.email]); 
+  }, [auth.currentUser?.email]);
 
   useEffect(() => {
     let filtered = [...emails];
@@ -80,7 +89,7 @@ function Inbox({ filter }) {
     }
 
     setFilteredEmails(filtered);
-  }, [filter, emails]); 
+  }, [filter, emails]);
 
   const formatEmailDate = (emailDate) => {
     const currentYear = new Date().getFullYear();
@@ -120,7 +129,9 @@ function Inbox({ filter }) {
           {filteredEmails.map((email) => (
             <li
               key={email.id}
-              className="flex items-center justify-between border-b py-1 hover:shadow-lg hover:cursor-pointer hover:border-t"
+              className="flex items-center justify-between border-b py-1 hover:shadow-lg hover:cursor-pointer hover:py-0 hover:border-t"
+              onMouseEnter={() => setHoveredEmail(email.id)}
+              onMouseLeave={() => setHoveredEmail(null)}
             >
               <div className="flex items-center">
                 <div className="flex items-center">
@@ -154,14 +165,11 @@ function Inbox({ filter }) {
                       <MdLabelImportantOutline className="text-xl text-gray-400" />
                     )}
                   </span>
-
-                  <Link to={`/mail/${email.id}`}>
-                    <span className="ml-2 text-sm font-semibold w-48 truncate">
-                      {email.sender}
-                    </span>
-                  </Link>
                 </div>
-                <Link to={`/mail/${email.id}`}>
+                <Link to={`/mail/${email.id}`} className="flex">
+                  <span className="ml-2 text-sm font-semibold w-48 truncate">
+                    {email.sender}
+                  </span>
                   <div className="ml-6 flex text-sm">
                     <div className="font-medium w-full truncate flex">
                       <span className="truncate max-w-96">{email.subject}</span> - <span className="max-w-36 2xl:max-w-96 truncate font-extralight">
@@ -171,8 +179,33 @@ function Inbox({ filter }) {
                   </div>
                 </Link>
               </div>
-              <div className="ml-6 text-sm text-gray-400">
-                <span>{formatEmailDate(email.timestamp)}</span>
+              <div className=" ml-6 text-sm text-black">
+                {!hoveredEmail && (
+                  <span>{formatEmailDate(email.timestamp)}</span>
+                )}
+                {hoveredEmail === email.id && (
+                  <div className="flex gap-2">
+                    <span
+                      className="cursor-pointer p-1 rounded-full hover:bg-gray-200 hover:text-gray-500 text-xl"
+                      onClick={() => toggleEmailField(email.id, 'archived', email.archived, setEmails, emails)}
+                    >
+                      <RiInboxArchiveLine />
+                    </span>
+                    <span
+                      className="cursor-pointer p-1 rounded-full hover:bg-gray-200 hover:text-gray-500 text-xl"
+                      onClick={() => toggleEmailField(email.id, 'deleted', email.deleted, setEmails, emails)}
+                    >
+                      <LiaTrashAlt />
+                    </span>
+                    <span
+                      className="cursor-pointer p-1 rounded-full hover:bg-gray-200 hover:text-gray-500 text-xl"
+                      onClick={() => toggleEmailField(email.id, 'read', email.read, setEmails, emails)}
+                    >
+                      <HiOutlineMailOpen />
+                      {/* <MdOutlineMarkEmailUnread /> */}
+                    </span>
+                  </div>
+                )}
               </div>
             </li>
           ))}
