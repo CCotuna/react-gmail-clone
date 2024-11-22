@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { MdCheckBox, MdCheckBoxOutlineBlank, MdKeyboardArrowDown, MdLabelImportant, MdLabelImportantOutline, MdStar, MdStarBorder } from "react-icons/md";
-import { getDatabase, ref, get } from 'firebase/database';
+import { getDatabase, ref, onValue } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 import app from "../firebase/firebaseConfig";
 import { Link } from 'react-router-dom';
@@ -12,7 +12,7 @@ function Inbox({ filter }) {
   const auth = getAuth();
 
   useEffect(() => {
-    const fetchEmails = async () => {
+    const fetchEmails = () => {
       const db = getDatabase(app);
       const email = auth.currentUser?.email;
 
@@ -20,44 +20,45 @@ function Inbox({ filter }) {
 
       const formattedEmail = email.replace(/\./g, '_').replace('@', '-');
       const dbRef = ref(db, `emails/${formattedEmail}`);
-      const snapshot = await get(dbRef);
 
-      if (snapshot.exists()) {
-        const messages = [];
-        snapshot.forEach((messageSnapshot) => {
-          const messageData = messageSnapshot.val();
+      onValue(dbRef, (snapshot) => {
+        if (snapshot.exists()) {
+          const messages = [];
+          snapshot.forEach((messageSnapshot) => {
+            const messageData = messageSnapshot.val();
 
-          if (messageData.receiverEmail === email || messageData.senderEmail === email) {
-            messages.push({
-              id: messageSnapshot.key,
-              sender: messageData.senderEmail,
-              receiver: messageData.receiverEmail,
-              subject: messageData.subject,
-              message: messageData.message,
-              timestamp: new Date(messageData.timestamp).toLocaleString(),
-              content: messageData.message,
-              read: messageData.read,
-              checked: messageData.checked,
-              star: messageData.star,
-              important: messageData.important,
-              archived: messageData.archived,
-              sentByMe: messageData.sentByMe,
-              deleted: messageData.deleted
-            });
-          }
-        });
+            if (messageData.receiverEmail === email || messageData.senderEmail === email) {
+              messages.push({
+                id: messageSnapshot.key,
+                sender: messageData.senderEmail,
+                receiver: messageData.receiverEmail,
+                subject: messageData.subject,
+                message: messageData.message,
+                timestamp: new Date(messageData.timestamp).toLocaleString(),
+                content: messageData.message,
+                read: messageData.read,
+                checked: messageData.checked,
+                star: messageData.star,
+                important: messageData.important,
+                archived: messageData.archived,
+                sentByMe: messageData.sentByMe,
+                deleted: messageData.deleted
+              });
+            }
+          });
 
-        setEmails(messages);
-        setFilteredEmails(messages);
-      } else {
-        console.log(`Branch does not exist for: ${formattedEmail}`);
-        setEmails([]);
-        setFilteredEmails([]);
-      }
+          setEmails(messages);
+          setFilteredEmails(messages); 
+        } else {
+          console.log(`Branch does not exist for: ${formattedEmail}`);
+          setEmails([]);
+          setFilteredEmails([]);
+        }
+      });
     };
 
     fetchEmails();
-  }, [auth.currentUser?.email]);
+  }, [auth.currentUser?.email]); 
 
   useEffect(() => {
     let filtered = [...emails];
@@ -79,8 +80,7 @@ function Inbox({ filter }) {
     }
 
     setFilteredEmails(filtered);
-  }, [filter, emails]);
-
+  }, [filter, emails]); 
 
   const formatEmailDate = (emailDate) => {
     const currentYear = new Date().getFullYear();
@@ -88,16 +88,16 @@ function Inbox({ filter }) {
     const emailYear = dateObj.getFullYear();
 
     if (emailYear === currentYear) {
-        return dateObj.toLocaleDateString("en-GB", {
-            day: "numeric",
-            month: "short",
-        });
+      return dateObj.toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+      });
     } else {
-        return dateObj.toLocaleDateString("en-GB", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-        });
+      return dateObj.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      });
     }
   };
 
