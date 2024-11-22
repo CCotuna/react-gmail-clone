@@ -10,7 +10,7 @@ import GoogleSlides from '../../assets/logo/googleAppsLogos/GoogleSlides.svg';
 import GoogleChat from '../../assets/logo/googleAppsLogos/GoogleChat.svg';
 import GoogleMeet from '../../assets/logo/googleAppsLogos/GoogleMeet.svg';
 import GoogleForms from '../../assets/logo/googleAppsLogos/GoogleForms.svg';
-import Youtube from '../../assets/logo/googleAppsLogos/Youtube.svg';
+import Youtube from '../../assets/logo/googleAppsLogos/YouTube.svg';
 import GoogleMaps from '../../assets/logo/googleAppsLogos/GoogleMaps.svg';
 import GoogleNews from '../../assets/logo/googleAppsLogos/GoogleNews.svg';
 import GoogleAds from '../../assets/logo/googleAppsLogos/GoogleAds.svg';
