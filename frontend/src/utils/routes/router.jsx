@@ -17,6 +17,7 @@ import DisplayTempEmails from '../../components/DisplayTempEmails';
 const Router = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [filter, setFilter] = useState('all');
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -39,10 +40,10 @@ const Router = () => {
             />
             <Route
                 path="/"
-                element={user ? <Layout /> : <Navigate to="/login" />}
+                element={user ? <Layout filter={filter} setFilter={setFilter} /> : <Navigate to="/login" />}
             >
-                <Route index element={<Inbox />} />
-                <Route path="mail" element={<Inbox />} />
+                <Route index element={<Inbox filter={filter} />} />
+                <Route path="mail" element={<Inbox filter={filter} />} />
                 <Route path="mail/:emailId" element={<Email />} />
                 <Route
                     path="chat"
@@ -59,7 +60,7 @@ const Router = () => {
     );
 };
 
-const Layout = () => {
+const Layout = ({ filter, setFilter }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [isNavPanelOpen, setIsNavPanelOpen] = useState(false);
 
@@ -93,7 +94,7 @@ const Layout = () => {
                         <div
                             className={`transition-all duration-200 ease-in-out ${isNavPanelOpen ? 'w-64' : 'w-0'
                                 } overflow-hidden`}>
-                            <NavigationPanel />
+                            <NavigationPanel setFilter={setFilter} />
                         </div>
                         <div className="flex-grow">
                             <Outlet />

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { MdCheckBox, MdCheckBoxOutlineBlank, MdKeyboardArrowDown, MdLabelImportant, MdLabelImportantOutline, MdStar, MdStarBorder } from "react-icons/md";
-import { getDatabase, ref, onValue, get } from 'firebase/database';
+import { getDatabase, ref, get } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 import app from "../firebase/firebaseConfig";
 import { Link } from 'react-router-dom';
 import { toggleEmailField } from "../utils/emails/emailFunctions";
 
-function Inbox() {
+function Inbox({ filter }) {
   const [emails, setEmails] = useState([]);
+  const [filteredEmails, setFilteredEmails] = useState([]);
   const auth = getAuth();
 
   useEffect(() => {
@@ -22,44 +23,64 @@ function Inbox() {
       const snapshot = await get(dbRef);
 
       if (snapshot.exists()) {
-        onValue(dbRef, (snapshot) => {
-          if (snapshot.exists()) {
-            const messages = [];
-            snapshot.forEach((messageSnapshot) => {
-              const messageData = messageSnapshot.val();
+        const messages = [];
+        snapshot.forEach((messageSnapshot) => {
+          const messageData = messageSnapshot.val();
 
-              if (messageData.receiverEmail === email || messageData.senderEmail === email) {
-                messages.push({
-                  id: messageSnapshot.key,
-                  sender: messageData.senderEmail,
-                  receiver: messageData.receiverEmail,
-                  subject: messageData.subject,
-                  message: messageData.message,
-                  timestamp: new Date(messageData.timestamp).toLocaleString(),
-                  content: messageData.message,
-                  read: messageData.read,
-                  checked: messageData.checked,
-                  star: messageData.star,
-                  important: messageData.important,
-                  archived: messageData.archived,
-                  sentByMe: messageData.sentByMe
-                });
-              }
+          if (messageData.receiverEmail === email || messageData.senderEmail === email) {
+            messages.push({
+              id: messageSnapshot.key,
+              sender: messageData.senderEmail,
+              receiver: messageData.receiverEmail,
+              subject: messageData.subject,
+              message: messageData.message,
+              timestamp: new Date(messageData.timestamp).toLocaleString(),
+              content: messageData.message,
+              read: messageData.read,
+              checked: messageData.checked,
+              star: messageData.star,
+              important: messageData.important,
+              archived: messageData.archived,
+              sentByMe: messageData.sentByMe,
+              deleted: messageData.deleted
             });
-
-            setEmails(messages);
-          } else {
-            setEmails([]);
           }
         });
+
+        setEmails(messages);
+        setFilteredEmails(messages);
       } else {
         console.log(`Branch does not exist for: ${formattedEmail}`);
         setEmails([]);
+        setFilteredEmails([]);
       }
     };
 
     fetchEmails();
   }, [auth.currentUser?.email]);
+
+  useEffect(() => {
+    let filtered = [...emails];
+
+    if (filter === "received") {
+      filtered = emails.filter(email => email.receiver === auth.currentUser?.email && email.sentByMe === false);
+    } else if (filter === "starred") {
+      filtered = emails.filter(email => email.star);
+    } else if (filter === "sent") {
+      filtered = emails.filter(email => email.sentByMe);
+    } else if (filter === "important") {
+      filtered = emails.filter(email => email.important);
+    } else if (filter === "trash") {
+      filtered = emails.filter(email => email.deleted);
+    } else if (filter === "archived") {
+      filtered = emails.filter(email => email.archived);
+    } else if (filter === "all") {
+      filtered = emails;
+    }
+
+    setFilteredEmails(filtered);
+  }, [filter, emails]);
+
 
   const formatEmailDate = (emailDate) => {
     const currentYear = new Date().getFullYear();
@@ -90,13 +111,13 @@ function Inbox() {
           </span>
         </div>
         <div>
-          <span>1-{emails.length} din {emails.length}</span>
+          <span>1-{filteredEmails.length} din {emails.length}</span>
         </div>
       </div>
 
       <div className="flex-1 overflow-y-auto">
         <ul>
-          {emails.map((email) => (
+          {filteredEmails.map((email) => (
             <li
               key={email.id}
               className="flex items-center justify-between border-b py-1 hover:shadow-lg hover:cursor-pointer hover:border-t"
