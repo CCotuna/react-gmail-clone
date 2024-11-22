@@ -4,6 +4,7 @@ import HomepageNavigation from '../components/layout/navigation/HomepageNavigati
 import HeroSection from '../components/ui/homepage/HeroSection';
 import GeminiSection from '../components/ui/homepage/GeminiSection';
 import SecuritySection from '../components/ui/homepage/SecuritySection';
+import DownloadSection from '../components/ui/homepage/DownloadSection';
 
 function Home() {
   return (
@@ -13,6 +14,7 @@ function Home() {
         <HeroSection/>
         <GeminiSection/>
         <SecuritySection />
+        <DownloadSection />
       </div>
     </div>
   );
