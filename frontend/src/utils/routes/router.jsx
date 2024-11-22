@@ -14,6 +14,8 @@ import wallpaper from '../../assets/images/backgrounds/tempBg5.jpg';
 import NavigationPanel from '../../components/layout/navigation/NavigationPanel';
 import DisplayTempEmails from '../../components/DisplayTempEmails';
 
+import Home from '../../pages/Home.jsx'
+
 const Router = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -34,29 +36,37 @@ const Router = () => {
 
     return (
         <Routes>
+        <Route
+            path="/"
+            element={user ? <Navigate to="/gmail" /> : <Home />}
+        />
+
+        <Route
+            path="/login"
+            element={user ? <Navigate to="/gmail" /> : <Authentication />}
+        />
+
+        <Route
+            path="/gmail"
+            element={user ? <Layout filter={filter} setFilter={setFilter} /> : <Navigate to="/login" />}
+        >
+            <Route index element={<Inbox filter={filter} />} />
+            <Route path="mail" element={<Inbox filter={filter} />} />
+            <Route path="mail/:emailId" element={<Email />} />
             <Route
-                path="/login"
-                element={user ? <Navigate to="/" /> : <Authentication />}
+                path="chat"
+                element={
+                    <div className="flex flex-col space-y-20 text-white">
+                        <Chat />
+                        <DisplayTempEmails />
+                    </div>
+                }
             />
-            <Route
-                path="/"
-                element={user ? <Layout filter={filter} setFilter={setFilter} /> : <Navigate to="/login" />}
-            >
-                <Route index element={<Inbox filter={filter} />} />
-                <Route path="mail" element={<Inbox filter={filter} />} />
-                <Route path="mail/:emailId" element={<Email />} />
-                <Route
-                    path="chat"
-                    element={
-                        <div className="flex flex-col space-y-20 text-white">
-                            <Chat />
-                            <DisplayTempEmails />
-                        </div>
-                    }
-                />
-            </Route>
-            <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
+        </Route>
+
+        {/* Ruta fallback */}
+        <Route path="*" element={<Navigate to="/" />} />
+    </Routes>
     );
 };
 

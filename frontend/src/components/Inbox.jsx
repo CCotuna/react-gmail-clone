@@ -171,7 +171,7 @@ function Inbox({ filter }) {
                     )}
                   </span>
                 </div>
-                <Link to={`/mail/${email.id}`} className="flex">
+                <Link to={`/gmail/mail/${email.id}`} className="flex">
                   <span className="ml-2 text-sm font-semibold w-48 truncate">
                     {email.sender}
                   </span>

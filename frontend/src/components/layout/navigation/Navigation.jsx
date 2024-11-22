@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-// import { logout } from "../../../utils/auth/authFunctions";
+import { logout } from "../../../utils/auth/authFunctions";
 
 import { IoSearch } from "react-icons/io5";
 import { RiSoundModuleFill, RiQuestionLine } from "react-icons/ri";
@@ -11,24 +11,27 @@ import { TbGridDots } from "react-icons/tb";
 import logo from "../../../assets/logo/gmailLogo.svg";
 import GoogleApps from "../../ui/GoogleApps";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UserProfile from "../../ui/UserProfile";
+
 
 function Navigation() {
     const [isGoogleAppsOpen, setIsGoogleAppsOpen] = useState(false);
     const [isUserProfileOpen, setIsUserProfileOpen] = useState(false);
+    const navigate = useNavigate();
 
-    // const handleLogout = async () => {
-    //     const result = await logout();
-    //     if (!result.success) {
-    //         alert(result.error);
-    //     }
-    // };
+    const handleLogout = async () => {
+        const result = await logout();
+        if (!result.success) {
+            alert(result.error);
+        }
+        navigate('/');
+    };
 
     return (
         <header className="flex w-full items-center p-2 ps-0 pb-0 bg-transparent justify-between">
             <div className="flex space-x-36 justify-between">
-                <Link to={'/'} >
+                <Link to={'/gmail'} >
                     <div className="flex items-center">
                         <img src={logo} alt="Gmail Logo" className="w-8 h-auto ms-2 mr-2" />
                         <span className="text-2xl text-gray-300">Gmail</span>
@@ -84,7 +87,7 @@ function Navigation() {
                     <div className="w-10 h-10 rounded-full bg-white cursor-pointer"></div>
                     {isUserProfileOpen && (
                         <div className="absolute top-14 right-0 z-50">
-                            <UserProfile />
+                            <UserProfile handleLogout={handleLogout} />
                         </div>
                     )}
                 </div>

@@ -15,11 +15,11 @@ function Sidebar({ setIsNavPanelOpen }) {
       </div>
 
       {/* Email Icon */}
-      <Link to={'/mail'}>
+      <Link to={'/gmail/mail'}>
         <div className="text-xl flex items-center justify-center flex-col cursor-pointer relative group">
           <div className={`p-1 px-3 rounded-full transition duration-200 ease-in-out ${location.pathname === '/mail' ? 'bg-gray-400' : 'group-hover:bg-gray-400'}`}>
             <div className="text-white">
-              {location.pathname === '/mail' ? <IoMailSharp /> : <IoMailOutline />}
+              {location.pathname === '/gmail/mail' ? <IoMailSharp /> : <IoMailOutline />}
             </div>
           </div>
           <div className="text-xs">Mail</div>
@@ -27,7 +27,7 @@ function Sidebar({ setIsNavPanelOpen }) {
       </Link>
       
       {/* Chat Icon */}
-      <Link to={'/chat'}>
+      <Link to={'/gmail/chat'}>
         <div className="text-xl flex items-center justify-center flex-col cursor-pointer relative group">
           <div className={`p-1 px-3 rounded-full transition duration-200 ease-in-out ${location.pathname === '/chat' ? 'bg-gray-400' : 'group-hover:bg-gray-400'}`}>
             <div className="text-white">
