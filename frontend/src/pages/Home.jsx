@@ -12,7 +12,7 @@ function Home() {
   return (
     <div>
      <HomepageNavigation />
-      <div className="space-y-20 mb-40">
+      <div className="space-y-20 mb-40 mt-24 md:mt-0">
         <div className="px-5 sm:px-10 lg:px-52">
           <HeroSection />
           <GeminiSection />

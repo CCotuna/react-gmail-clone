@@ -13,7 +13,7 @@ function HeroSection() {
                 <span className="text-sm sm:text-base lg:text-lg text-gray-500">
                     Get more done with Gmail. Now integrated with Google Chat,<br className="hidden lg:block" /> Google Meet, and more, all in one place.
                 </span>
-                <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-10 space-y-5 sm:space-y-0 justify-center lg:justify-start">
+                <div className="flex flex-col sm:flex-row items-center sm:space-x-10 space-y-5 sm:space-y-0 justify-center lg:justify-start">
                     <CreateAccountBtn />
                     <span className="text-blue-500">
                         <Link>For work</Link>
