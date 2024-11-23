@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const Accordion = ({ data, imagePosition = 'left' }) => {
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [fade, setFade] = useState(false);
 
   const toggleAccordion = (index) => {
@@ -9,9 +9,8 @@ const Accordion = ({ data, imagePosition = 'left' }) => {
   };
 
   useEffect(() => {
-    
     setFade(true);
-    const timeout = setTimeout(() => setFade(false), 300); 
+    const timeout = setTimeout(() => setFade(false), 300);
     return () => clearTimeout(timeout);
   }, [activeIndex]);
 
@@ -32,24 +31,32 @@ const Accordion = ({ data, imagePosition = 'left' }) => {
           />
         </div>
 
-        <div className="max-w-xl text-left">
-          {data.map((item, index) => (
-            <div key={index} className="mb-4">
-              <li
-                className="text-2xl text-gray-600 w-full text-left"
-                onClick={() => toggleAccordion(index)}
-              >
-                {item.title}
-              </li>
+        <div className="max-w-xl text-left w-full">
+          {data.map((item, index) => {
+            const isActive = activeIndex === index;
+            return (
               <div
-                className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                  activeIndex === index ? 'max-h-40' : 'max-h-0'
-                }`}
+                key={index}
+                className="flex items-start space-x-4 border-l-2 border-blue-500 pl-4 mb-6"
               >
-                <p className="text-lg text-gray-500 mt-2 text-left">{item.content}</p>
+                <div className="w-full">
+                  <span
+                    className="text-2xl text-gray-600 cursor-pointer"
+                    onClick={() => toggleAccordion(index)}
+                  >
+                    {item.title}
+                  </span>
+                  <div
+                    className={` overflow-hidden transition-all duration-300 ease-in-out ${
+                      isActive ? 'max-h-40' : 'max-h-0'
+                    }`}
+                  >
+                    <p className="text-lg text-gray-500 mt-2">{item.content}</p>
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
