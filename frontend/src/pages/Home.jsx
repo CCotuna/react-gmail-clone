@@ -11,14 +11,18 @@ import GoogleWorkspaceSection from '../components/ui/homepage/GoogleWorkspaceSec
 function Home() {
   return (
     <div>
-      <HomepageNavigation />
-      <div className='px-52 space-y-20 mb-40'>
-        <HeroSection/>
-        <GeminiSection/>
-        <SecuritySection />
-        <DownloadSection />
-        <BenefitsSection />
-        <GoogleWorkspaceSection />
+     <HomepageNavigation />
+      <div className="space-y-20 mb-40">
+        <div className="px-5 sm:px-10 lg:px-52">
+          <HeroSection />
+          <GeminiSection />
+          <SecuritySection />
+          <DownloadSection />
+        </div>
+        <BenefitsSection /> 
+        <div className="px-5 sm:px-10 lg:px-52">
+          <GoogleWorkspaceSection />
+        </div>
       </div>
     </div>
   );
