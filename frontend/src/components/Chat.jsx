@@ -1,111 +1,101 @@
-import React, { useState } from 'react';
-import app from '../firebase/firebaseConfig';
-import { getDatabase, ref, set, push } from 'firebase/database';
+import React, { useState, useEffect } from 'react';
+import { getDatabase, ref, onValue, push, set } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
+import app from '../firebase/firebaseConfig';
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-function Chat() {
-  const [inputValue1, setInputValue1] = useState(''); 
-  const [inputValue2, setInputValue2] = useState(''); 
-  const [subject, setSubject] = useState(''); 
-  const auth = getAuth();  
+const Chat = () => {
+  const { conversationId } = useParams();
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState('');
+  const auth = getAuth();
 
-  const saveData = async () => {
+  useEffect(() => {
     const db = getDatabase(app);
-    const currentUser = auth.currentUser; 
+    const conversationRef = ref(db, `conversations/${conversationId}/messages`);
+    const unsubscribe = onValue(conversationRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        setMessages(Object.values(data));
+      }
+    });
 
-    if (currentUser) {
-      const receiverEmail = inputValue2; 
-      const messageContent = inputValue1; 
-      const subjectText = subject || "No Subject"; 
-      const timestamp = Date.now();  
-      const signedBy = currentUser.email.split('@')[1];  
-      const read = false;
-      const checked = false;
-      const star = false;
-      const important = false;
-      const archived = false;
-      const deleted = false;
+    return () => {
 
-      
-      const encodedSenderEmail = currentUser.email.replace(/\./g, '_').replace('@', '-');
-      const encodedReceiverEmail = receiverEmail.replace(/\./g, '_').replace('@', '-'); 
+    };
+  }, [conversationId]);
 
-      
-      const messageRefForReceiver = ref(db, `emails/${encodedReceiverEmail}`);
-      const newMessageRefReceiver = push(messageRefForReceiver);  
-      await set(newMessageRefReceiver, {
-        senderEmail: currentUser.email,  
-        senderId: currentUser.uid,       
-        receiverEmail: receiverEmail,    
-        message: messageContent,         
-        timestamp: timestamp,            
-        subject: subjectText,
-        signedBy: signedBy,
-        read: read,
-        checked: checked,
-        star: star,
-        important: important,
-        archived: archived,
-        deleted: deleted,
-        sentByMe: false,  
-      });
 
-      
-      const messageRefForSender = ref(db, `emails/${encodedSenderEmail}`);
-      const newMessageRefSender = push(messageRefForSender);
-      await set(newMessageRefSender, {
-        senderEmail: currentUser.email,  
-        senderId: currentUser.uid,       
-        receiverEmail: receiverEmail,    
-        message: messageContent,         
-        timestamp: timestamp,            
-        subject: subjectText,
-        signedBy: signedBy,
-        read: false,
-        checked: false,
-        star: false,
-        important: false,
-        archived: false,
-        deleted: false,
-        sentByMe: true,  
-      });
+  const sendMessage = async () => {
+    if (!newMessage.trim()) return;
 
-      alert('Message sent successfully');
-    } else {
-      alert('You must be logged in to send a message');
-    }
+    const db = getDatabase(app);
+    const userEmail = auth.currentUser?.email;
+    const formattedEmail = userEmail.replace(/\./g, '_').replace('@', '-');
+    const newMessageRef = push(ref(db, `conversations/${conversationId}/messages`));
+
+
+    const timestamp = Date.now();
+
+    await set(newMessageRef, {
+      id: newMessageRef.key,
+      content: newMessage,
+      sender: formattedEmail,
+      timestamp: timestamp,
+    });
+
+    setNewMessage('');
+  };
+
+
+  const formatTimestamp = (timestamp) => {
+    const date = new Date(timestamp);
+    const options = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+    };
+    return date.toLocaleString('ro-RO', options);
+  };
+
+  const formatEmail = (email) => {
+    return email.replace(/_/g, '.').replace(/-/g, '@');
   };
 
   return (
-    <div className='flex flex-col space-y-5 w-96'>
-      <label>Subject</label>
-      <input
-        type="text"
-        className='text-black'
-        value={subject}
-        onChange={(e) => setSubject(e.target.value)}
-        placeholder="Enter subject"
-      />
-      <br />
-      <label>Message</label>
-      <input
-        type="text"
-        className='text-black'
-        value={inputValue1}
-        onChange={(e) => setInputValue1(e.target.value)}
-        placeholder="Enter your message"
-      />
-      <br />
-      <label>Receiver Email</label>
-      <input
-        type="email"
-        className='text-black'
-        value={inputValue2}
-        onChange={(e) => setInputValue2(e.target.value)}
-        placeholder="Enter receiver's email"
-      />
-      <br />
-      <button onClick={saveData}>Send Message</button>
+    <div className="flex flex-col space-y-4">
+      <Link to={'/gmail/chat'} className="text-white">Back to chats</Link>
+      <div className="p-4 bg-gray-800 rounded-lg text-white">
+        {messages.map((message) => (
+          <div key={message.id} className="p-2">
+            <p className="font-semibold">{formatEmail(message.sender)}</p>
+            <p>{message.content}</p>
+            <p className="text-gray-400 text-sm">
+              {formatTimestamp(message.timestamp)}
+            </p>
+          </div>
+        ))}
+      </div>
+      <div className="flex space-x-4 p-4 bg-gray-700 rounded-lg">
+        <input
+          type="text"
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+          placeholder="Scrie un mesaj..."
+          className="p-2 rounded-lg"
+        />
+        <button
+          onClick={sendMessage}
+          className="p-2 bg-green-500 text-white rounded-lg"
+        >
+          Trimite
+        </button>
+      </div>
     </div>
   );
 };
