@@ -19,7 +19,7 @@ function GoogleWorkspaceSection() {
 
       <div className="text-center space-y-4 flex flex-col max-w-2xl">
         <span className="text-4xl font-normal">
-          Gmail is now part of <br /> Google Workspace
+          Gmail is now part of <br className='hidden lg:block' /> Google Workspace
         </span>
         <span className="text-lg text-gray-500">
           Collaborate faster, from any device, anytime, all in one place.
