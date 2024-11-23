@@ -77,7 +77,9 @@ function Chat() {
   };
 
   return (
-    <div className='flex flex-col space-y-5 w-96'>
+    <div className="flex flex-col h-[calc(100vh-5rem)] p-6 bg-gray-50 rounded-2xl">
+
+    <div className='flex flex-col space-y-5 w-96 text-black'>
       <label>Subject</label>
       <input
         type="text"
@@ -106,6 +108,7 @@ function Chat() {
       />
       <br />
       <button onClick={saveData}>Send Message</button>
+    </div>
     </div>
   );
 };

@@ -58,7 +58,7 @@ const Router = () => {
                 element={
                     <div className="flex flex-col space-y-20 text-white">
                         <Chat />
-                        <DisplayTempEmails />
+                        {/* <DisplayTempEmails /> */}
                     </div>
                 }
             />
