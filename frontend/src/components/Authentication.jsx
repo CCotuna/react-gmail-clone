@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { auth } from "../firebase/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
-import { signup, login, resetPassword, logout } from "../utils/auth/authFunctions";
+import { auth } from "../firebase/firebaseConfig";
+import AuthenticationForm from "./AuthenticationForm";
 
 const Authentication = () => {
- 
   const [user, setUser] = useState(null);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [isSigningUp, setIsSigningUp] = useState(false);
+  const [isPasswordReset, setIsPasswordReset] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -18,62 +16,26 @@ const Authentication = () => {
     return () => unsubscribe();
   }, []);
 
-  const handleSignup = async () => {
-    const result = await signup(email, password);
-    setError(result.success ? null : result.error);
-  };
-
-  const handleLogin = async () => {
-    const result = await login(email, password);
-    setError(result.success ? null : result.error);
-  };
-
-  const handlePasswordReset = async () => {
-    const result = await resetPassword(email);
-    setError(result.success ? result.message : result.error);
-  };
-
-  const handleLogout = async () => {
-    const result = await logout();
-    setError(result.success ? null : result.error);
-  };
-
   return (
-    <div className="auth-container">
-      {user ? (
-        <>
-          <p>Welcome, {user.email}!</p>
-          <button onClick={handleLogout}>Logout</button>
-        </>
-      ) : (
-        <>
-          <h2>{isSigningUp ? "Sign Up" : "Login"}</h2>
-          {error && <p style={{ color: "red" }}>{error}</p>}
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {isSigningUp ? (
-            <button onClick={handleSignup}>Sign Up</button>
-          ) : (
-            <>
-              <button onClick={handleLogin}>Login</button>
-              <button onClick={handlePasswordReset}>Forgot Password?</button>
-            </>
-          )}
-          <button onClick={() => setIsSigningUp(!isSigningUp)}>
-            {isSigningUp ? "Switch to Login" : "Switch to Sign Up"}
-          </button>
-        </>
-      )}
+    <div
+      className="flex justify-center items-center min-h-screen bg-cover bg-center"
+      style={{ backgroundImage: "url('/tempBg3.jpg')" }}
+    >
+      <div className="w-full max-w-md bg-white p-8 rounded-lg">
+        {user ? 
+        "" : (
+          <>
+            {error && <p className="text-blue-500 text-center mb-4">{error}</p>}
+            <AuthenticationForm
+              isSigningUp={isSigningUp}
+              setError={setError}
+              isPasswordReset={isPasswordReset}
+              setIsPasswordReset={setIsPasswordReset}
+              setIsSigningUp={setIsSigningUp}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 };
