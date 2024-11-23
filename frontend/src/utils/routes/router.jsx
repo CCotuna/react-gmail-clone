@@ -15,6 +15,7 @@ import NavigationPanel from '../../components/layout/navigation/NavigationPanel'
 import DisplayTempEmails from '../../components/DisplayTempEmails';
 
 import Home from '../../pages/Home.jsx'
+import ChatList from '../../components/ChatList.jsx';
 
 const Router = () => {
     const [user, setUser] = useState(null);
@@ -53,18 +54,9 @@ const Router = () => {
             <Route index element={<Inbox filter={filter} />} />
             <Route path="mail" element={<Inbox filter={filter} />} />
             <Route path="mail/:emailId" element={<Email />} />
-            <Route
-                path="chat"
-                element={
-                    <div className="flex flex-col space-y-20 text-white">
-                        <Chat />
-                        {/* <DisplayTempEmails /> */}
-                    </div>
-                }
-            />
+            <Route path="chat" element={<ChatList />} />
+            <Route path="chat/:conversationId" element={<Chat />} />
         </Route>
-
-        {/* Ruta fallback */}
         <Route path="*" element={<Navigate to="/" />} />
     </Routes>
     );
