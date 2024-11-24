@@ -68,18 +68,24 @@ const Chat = () => {
   };
 
   return (
-    <div className="flex flex-col space-y-4">
+    <div className="flex flex-col space-y-4 max-w-lg">
       <Link to={'/gmail/chat'} className="text-white">Back to chats</Link>
-      <div className="p-4 bg-gray-800 rounded-lg text-white">
-        {messages.map((message) => (
-          <div key={message.id} className="p-2">
-            <p className="font-semibold">{formatEmail(message.sender)}</p>
-            <p>{message.content}</p>
-            <p className="text-gray-400 text-sm">
-              {formatTimestamp(message.timestamp)}
-            </p>
-          </div>
-        ))}
+      <div className="p-4 bg-gray-800 rounded-lg text-white space-y-2">
+        {messages.map((message) => {
+          const isCurrentUser = message.sender === auth.currentUser?.email.replace(/\./g, '_').replace('@', '-');
+          return (
+            <div
+              key={message.id}
+              className={`p-2 rounded-lg ${
+                isCurrentUser ? 'bg-gray-500 self-end text-right' : 'bg-gray-700 self-start text-left'
+              }`}
+            >
+              <p className="font-semibold">{formatEmail(message.sender)}</p>
+              <p>{message.content}</p>
+              <p className="text-gray-400 text-sm">{formatTimestamp(message.timestamp)}</p>
+            </div>
+          );
+        })}
       </div>
       <div className="flex space-x-4 p-4 bg-gray-700 rounded-lg">
         <input
@@ -87,7 +93,7 @@ const Chat = () => {
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Scrie un mesaj..."
-          className="p-2 rounded-lg"
+          className="p-2 rounded-lg flex-grow"
         />
         <button
           onClick={sendMessage}
@@ -98,6 +104,7 @@ const Chat = () => {
       </div>
     </div>
   );
+  
 };
 
 export default Chat;
