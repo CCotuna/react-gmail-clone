@@ -8,12 +8,13 @@ import DownloadSection from '../components/ui/homepage/DownloadSection';
 import BenefitsSection from '../components/ui/homepage/BenefitsSection';
 import GoogleWorkspaceSection from '../components/ui/homepage/GoogleWorkspaceSection';
 import CTASection from '../components/ui/homepage/CTASection';
+import Footer from '../components/layout/footer/homepage/Footer';
 
 function Home() {
   return (
     <div>
      <HomepageNavigation />
-      <div className="space-y-20 mb-40 mt-24 md:mt-0">
+      <div className="space-y-20 mt-24 md:mt-0">
         <div className="px-5 sm:px-10 lg:px-36">
           <HeroSection />
           <GeminiSection />
@@ -25,6 +26,7 @@ function Home() {
           <GoogleWorkspaceSection />
           <CTASection />
         </div>
+        <Footer />
       </div>
     </div>
   );
