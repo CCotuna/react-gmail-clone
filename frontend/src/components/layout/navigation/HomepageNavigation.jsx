@@ -31,19 +31,21 @@ function HomepageNavigation() {
                     </div>
                 </Link>
 
-                <ul className="flex items-center space-x-5"> 
+                <ul className="flex items-center space-x-5">
                     <li className={`block md:hidden text-blue-500 py-2 px-7 border rounded-md ${isScrolled ? 'hidden' : ''}`}>
                         <Link to={'/login'}>Sign In</Link>
-                    </li>   
+                    </li>
                     <li className="hidden md:block text-blue-500">
                         <Link>For work</Link>
-                    </li>                
-                    <li className="hidden md:block text-blue-500 py-2 px-7 border rounded-md">
-                        <Link to={'/login'}>Sign In</Link>
-                    </li>              
+                    </li>
+                    <Link to={'/login'}>
+                        <li className="hidden md:block text-blue-500 py-2 px-7 border rounded-md">
+                            Sign In
+                        </li>
+                    </Link>
                     <li className={`hidden md:block ${isScrolled ? '' : 'hidden'}`}>
                         <CreateAccountBtn />
-                    </li>             
+                    </li>
                     <li className={`block md:hidden ${isScrolled ? '' : 'hidden'}`}>
                         <CreateAccountBtn />
                     </li>

@@ -4,7 +4,7 @@ import { MdOutlineWifiOff, MdDevicesOther } from "react-icons/md";
 
 function BenefitsSection() {
   return (
-    <div className="w-full bg-gray-100 px-5 py-10 sm:px-10 lg:px-20 xl:px-40">
+    <div className="w-full bg-gray-100 px-5 py-20 sm:px-10 lg:px-20 xl:px-40">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div className="flex flex-col items-start space-y-5">
           <span className="bg-blue-500 rounded-full w-12 h-12 text-white flex items-center justify-center text-2xl">

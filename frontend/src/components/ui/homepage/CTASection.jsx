@@ -5,7 +5,7 @@ import CreateAccountBtn from '../CreateAccountBtn';
 
 function CTASection() {
     return (
-        <div className="flex flex-col text-center items-center justify-center space-y-5 p-5 sm:p-10 sm:py-20 bg-gray-100">
+        <div className="flex flex-col text-center items-center justify-center space-y-5 p-5 sm:p-10 sm:py-20 mt-10 bg-gray-100 ">
             <div className="flex flex-col sm:flex-row sm:space-x-5 space-y-5 sm:space-y-0 items-center justify-center">
                 <img
                     src={logo}

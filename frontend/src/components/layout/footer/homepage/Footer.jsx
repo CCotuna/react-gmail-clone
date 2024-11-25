@@ -7,7 +7,7 @@ import { BsGlobe } from "react-icons/bs";
 function Footer() {
     return (
         <div className='flex justify-evenly items-center w-full bg-gray-100 py-10 text-gray-500'>
-            <div className='flex items-center space-x-5 text-sm'>
+            <div className='flex items-center space-x-6 text-sm'>
                 <img src={googleLogo} alt="" />
                 <span>Privacy</span>
                 <span>Terms</span>
