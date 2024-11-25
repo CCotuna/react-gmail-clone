@@ -51,12 +51,10 @@ function NavigationPanel({ setFilter, setIsComposeOpen }) {
             <ComposeBtn onClick={() => setIsComposeOpen(true)} />
             <div className="space-y-1">
                 {menuItems.map(renderMenuItem)}
-
                 <div
                     className="flex items-center cursor-pointer rounded-full hover:bg-white hover:bg-opacity-30"
-                    onClick={() => setShowMore(!showMore)}
-                >
-                    {showMore ? <MdExpandLess className="text-xl" /> : <MdExpandMore className="text-xl" />}
+                    onClick={() => setShowMore(!showMore)}>
+                    {showMore ? <MdExpandLess className="text-xl mx-3" /> : <MdExpandMore className="text-xl mx-3" />}
                     <span>{showMore ? "Mai puține" : "Mai multe"}</span>
                 </div>
 
