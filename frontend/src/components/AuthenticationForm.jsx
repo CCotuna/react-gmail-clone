@@ -48,7 +48,7 @@ const AuthenticationForm = ({
   };
 
   return (
-    <div className="flex flex-col w-full max-w-md bg-white p-6 rounded-lg">
+    <div className="flex flex-col w-full max-w-md p-6 rounded-lg">
       <img src={gmailLogo} alt="Gmail Logo" className="w-12 h-12 ml-4" />
 
       {!isPasswordReset && (

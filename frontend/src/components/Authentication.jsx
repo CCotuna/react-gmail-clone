@@ -3,8 +3,6 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/firebaseConfig";
 import AuthenticationForm from "./AuthenticationForm";
 
-import tempBg5 from '../assets/images/backgrounds/tempBg5.jpg';
-
 const Authentication = () => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
@@ -20,8 +18,7 @@ const Authentication = () => {
 
   return (
     <div
-      className="flex justify-center items-center min-h-screen bg-cover bg-center"
-      style={{ backgroundImage: `url(${tempBg5})` }}
+      className="flex justify-center items-center min-h-screen bg-gradient-to-b from-black via-gray-900 to-black bg-cover bg-center"
     >
       <div className="w-full max-w-md bg-white p-8 rounded-lg">
         {user ? 
