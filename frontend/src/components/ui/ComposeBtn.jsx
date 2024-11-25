@@ -1,9 +1,13 @@
 import { RiPencilLine } from "react-icons/ri";
 
-function ComposeBtn() {
+function ComposeBtn({ onClick }) {
     return (
         <button
             className="flex justify-center w-fit items-center space-x-3 rounded-xl p-3 px-4  bg-white text-gray-600"
+            onClick={() => {
+                console.log("Compose button clicked");
+                onClick();
+            }}
         >
             <RiPencilLine className="text-2xl" />
             <span className="text-sm">Scrie</span>

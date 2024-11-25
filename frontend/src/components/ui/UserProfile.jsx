@@ -35,7 +35,7 @@ function UserProfile({ onClose, handleLogout }) {
                     <span className='text-xl'>Salut, {userEmail.split('@')[0]}!</span>
                     <button className='px-3 py-2 border border-white text-blue-200 rounded-full'>Gestioneaza-ti Contul Google</button>
                 </div>
-                <div className='flex justify-between items-center w-full bg-gray-950 text-white rounded-full py-3 px-5 mx-3 opacity-80'>
+                <div className='flex justify-between items-center w-full bg-red-700 text-white rounded-full py-3 px-5 mx-3 opacity-80'>
                     <span onClick={handleLogout}>Deconecteaza-te pentru moment</span>
                     {/* <span>Afiseaza mai multe conturi</span> */}
                     <span>

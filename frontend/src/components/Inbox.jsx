@@ -14,7 +14,9 @@ import app from "../firebase/firebaseConfig";
 import { Link } from 'react-router-dom';
 import { toggleEmailField, permanentlyDeleteEmail } from "../utils/emails/emailFunctions";
 
-function Inbox({ filter }) {
+import ComposeBox from "./ComposeBox";
+
+function Inbox({ filter, isComposeOpen, setIsComposeOpen }) {
   const [emails, setEmails] = useState([]);
   const [filteredEmails, setFilteredEmails] = useState([]);
   const [hoveredEmail, setHoveredEmail] = useState(null);
@@ -73,7 +75,7 @@ function Inbox({ filter }) {
     let filtered = emails.filter(email => {
       if (filter !== "trash" && email.deleted) return false;
       if (filter !== "archived" && email.archived) return false;
-  
+
       if (filter === "received") {
         return email.receiver === auth.currentUser?.email && email.sentByMe === false;
       } else if (filter === "starred") {
@@ -89,10 +91,10 @@ function Inbox({ filter }) {
       } else if (filter === "all" || filter === "snoozed" || filter === "drafts" || filter === "scheduled" || filter === "spam") {
         return true;
       }
-  
+
       return false;
     });
-  
+
     setFilteredEmails(filtered);
   }, [filter, emails, auth.currentUser?.email]);
 
@@ -117,6 +119,11 @@ function Inbox({ filter }) {
 
   return (
     <div className="flex flex-col h-[calc(100vh-5rem)] p-6 bg-gray-50 rounded-2xl">
+      {isComposeOpen && (
+        <div className="absolute bottom-4 right-4">
+          <ComposeBox onClose={() => setIsComposeOpen(false)} />
+        </div>
+      )}
       <div className="flex justify-between mb-2">
         <div className="flex items-center">
           <span className="cursor-pointer flex items-center">

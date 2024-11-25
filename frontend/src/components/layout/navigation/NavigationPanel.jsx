@@ -5,9 +5,10 @@ import { RiSpam2Line } from "react-icons/ri";
 import { FaRegFolderOpen, FaCog, FaTag } from "react-icons/fa";
 import ComposeBtn from "../../ui/ComposeBtn";
 
-function NavigationPanel({ setFilter }) {
+function NavigationPanel({ setFilter, setIsComposeOpen }) {
     const [showMore, setShowMore] = useState(false);
-    const [activeItem, setActiveItem] = useState("all");  
+    const [activeItem, setActiveItem] = useState("all");
+
 
     const menuItems = [
         { id: "received", icon: <MdInbox className="text-xl" />, label: "Mesaje primite" },
@@ -27,8 +28,8 @@ function NavigationPanel({ setFilter }) {
     ];
 
     const handleMenuItemClick = (id) => {
-        setActiveItem(id); 
-        setFilter(id); 
+        setActiveItem(id);
+        setFilter(id);
     };
 
     const renderMenuItem = (item) => (
@@ -47,7 +48,7 @@ function NavigationPanel({ setFilter }) {
 
     return (
         <div className="w-auto min-w-64 h-[calc(100vh-5rem)] mt-4 bg-transparent text-white space-y-5">
-            <ComposeBtn />
+            <ComposeBtn onClick={() => setIsComposeOpen(true)} />
             <div className="space-y-1">
                 {menuItems.map(renderMenuItem)}
 

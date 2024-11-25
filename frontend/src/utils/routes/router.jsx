@@ -19,50 +19,60 @@ import ChatList from '../../components/ChatList.jsx';
 
 const Router = () => {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState('all');
+    const [introComplete, setIntroComplete] = useState(false);
+    const [authChecked, setAuthChecked] = useState(false);
+    const [isComposeOpen, setIsComposeOpen] = useState(false);
 
     useEffect(() => {
+        const introTimer = setTimeout(() => {
+            setIntroComplete(true);
+        }, 2000);
+
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
-            setLoading(false);
+            setAuthChecked(true);
         });
 
-        return () => unsubscribe();
+        return () => {
+            clearTimeout(introTimer);
+            unsubscribe();
+        };
     }, []);
 
-    if (loading) {
+    if (!introComplete || (!user && !authChecked)) {
         return <PreLoader />;
     }
 
     return (
         <Routes>
-        <Route
-            path="/"
-            element={user ? <Navigate to="/gmail" /> : <Home />}
-        />
+            <Route
+                path="/"
+                element={user ? <Navigate to="/gmail" /> : <Home />}
+            />
 
-        <Route
-            path="/login"
-            element={user ? <Navigate to="/gmail" /> : <Authentication />}
-        />
+            <Route
+                path="/login"
+                element={user ? <Navigate to="/gmail" /> : <Authentication />}
+            />
 
-        <Route
-            path="/gmail"
-            element={user ? <Layout filter={filter} setFilter={setFilter} /> : <Navigate to="/login" />}
-        >
-            <Route index element={<Inbox filter={filter} />} />
-            <Route path="mail" element={<Inbox filter={filter} />} />
-            <Route path="mail/:emailId" element={<Email />} />
-            <Route path="chat" element={<ChatList />} />
-            <Route path="chat/:conversationId" element={<Chat />} />
-        </Route>
-        <Route path="*" element={<Navigate to="/" />} />
-    </Routes>
+            <Route
+                path="/gmail"
+                element={user ? <Layout filter={filter} setFilter={setFilter} isComposeOpen={isComposeOpen} setIsComposeOpen={setIsComposeOpen} /> : <Navigate to="/login" />}
+            >
+                <Route index element={<Inbox filter={filter} isComposeOpen={isComposeOpen} setIsComposeOpen={setIsComposeOpen} />} />
+                <Route path="mail" element={<Inbox filter={filter} isComposeOpen={isComposeOpen} setIsComposeOpen={setIsComposeOpen} />} />
+                <Route path="mail/:emailId" element={<Email />} />
+                <Route path="chat" element={<ChatList />} />
+                <Route path="chat/:conversationId" element={<Chat />} />
+            </Route>
+            <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
     );
 };
 
-const Layout = ({ filter, setFilter }) => {
+const Layout = ({ filter, setFilter, setIsComposeOpen }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [isNavPanelOpen, setIsNavPanelOpen] = useState(false);
 
@@ -96,7 +106,7 @@ const Layout = ({ filter, setFilter }) => {
                         <div
                             className={`transition-all duration-200 ease-in-out ${isNavPanelOpen ? 'w-64' : 'w-0'
                                 } overflow-hidden`}>
-                            <NavigationPanel setFilter={setFilter} />
+                            <NavigationPanel setFilter={setFilter} setIsComposeOpen={setIsComposeOpen} />
                         </div>
                         <div className="flex-grow">
                             <Outlet />
