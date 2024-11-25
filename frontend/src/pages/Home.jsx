@@ -7,21 +7,23 @@ import SecuritySection from '../components/ui/homepage/SecuritySection';
 import DownloadSection from '../components/ui/homepage/DownloadSection';
 import BenefitsSection from '../components/ui/homepage/BenefitsSection';
 import GoogleWorkspaceSection from '../components/ui/homepage/GoogleWorkspaceSection';
+import CTASection from '../components/ui/homepage/CTASection';
 
 function Home() {
   return (
     <div>
      <HomepageNavigation />
       <div className="space-y-20 mb-40 mt-24 md:mt-0">
-        <div className="px-5 sm:px-10 lg:px-52">
+        <div className="px-5 sm:px-10 lg:px-36">
           <HeroSection />
           <GeminiSection />
           <SecuritySection />
           <DownloadSection />
         </div>
         <BenefitsSection /> 
-        <div className="px-5 sm:px-10 lg:px-52">
+        <div className="px-5 sm:px-10 lg:px-36">
           <GoogleWorkspaceSection />
+          <CTASection />
         </div>
       </div>
     </div>
