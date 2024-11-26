@@ -11,7 +11,7 @@ import { HiOutlineMailOpen } from "react-icons/hi";
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 import app from "../firebase/firebaseConfig";
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { toggleEmailField, permanentlyDeleteEmail } from "../utils/emails/emailFunctions";
 
 import ComposeBox from "./ComposeBox";
