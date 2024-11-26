@@ -77,7 +77,7 @@ function Email() {
         </div>
       </div>
 
-      <div className='ms-16 mt-6 max-w-6xl'>
+      <div className='ms-16 mt-6 max-w-5xl'>
         <p>{emailDetails.message}</p>
       </div>
 
