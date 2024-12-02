@@ -10,20 +10,22 @@ import Authentication from '../../components/Authentication';
 import Inbox from '../../components/Inbox';
 import Chat from '../../components/Chat';
 import Email from '../../components/Email';
-import wallpaper from '../../assets/images/backgrounds/tempBg5.jpg';
 import NavigationPanel from '../../components/layout/navigation/NavigationPanel';
-import DisplayTempEmails from '../../components/DisplayTempEmails';
+import BackgroundChanger from '../background/backgroundChanger.jsx';
+
+import DefaultBackground from '../../assets/images/backgrounds/tempBg8.jpg';
 
 import Home from '../../pages/Home.jsx'
 import ChatList from '../../components/ChatList.jsx';
+import { loadBackground } from '../background/backgroundFunctions.jsx';
 
 const Router = () => {
     const [user, setUser] = useState(null);
-    // const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState('all');
     const [introComplete, setIntroComplete] = useState(false);
     const [authChecked, setAuthChecked] = useState(false);
     const [isComposeOpen, setIsComposeOpen] = useState(false);
+    const [wallpaper, setWallpaper] = useState(DefaultBackground);
 
     useEffect(() => {
         const introTimer = setTimeout(() => {
@@ -33,6 +35,9 @@ const Router = () => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
             setAuthChecked(true);
+            if (currentUser) {
+                loadBackground(setWallpaper, DefaultBackground);
+            }
         });
 
         return () => {
@@ -59,7 +64,7 @@ const Router = () => {
 
             <Route
                 path="/gmail"
-                element={user ? <Layout filter={filter} setFilter={setFilter} isComposeOpen={isComposeOpen} setIsComposeOpen={setIsComposeOpen} /> : <Navigate to="/login" />}
+                element={user ? <Layout filter={filter} setFilter={setFilter} isComposeOpen={isComposeOpen} setIsComposeOpen={setIsComposeOpen} wallpaper={wallpaper} setWallpaper={setWallpaper} /> : <Navigate to="/login" />}
             >
                 <Route index element={<Inbox filter={filter} isComposeOpen={isComposeOpen} setIsComposeOpen={setIsComposeOpen} />} />
                 <Route path="mail" element={<Inbox filter={filter} isComposeOpen={isComposeOpen} setIsComposeOpen={setIsComposeOpen} />} />
@@ -72,9 +77,11 @@ const Router = () => {
     );
 };
 
-const Layout = ({ filter, setFilter, setIsComposeOpen }) => {
+const Layout = ({ filter, setFilter, setIsComposeOpen, wallpaper, setWallpaper }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [isNavPanelOpen, setIsNavPanelOpen] = useState(false);
+
+    console.log(wallpaper)
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -93,10 +100,14 @@ const Layout = ({ filter, setFilter, setIsComposeOpen }) => {
             <div
                 className="absolute top-0 left-0 w-full h-full bg-cover bg-center bg-no-repeat"
                 style={{
-                    backgroundImage: `url(${wallpaper})`,
+                    backgroundImage: wallpaper ? `url(${wallpaper})` : 'none',
                     backgroundAttachment: 'fixed',
                 }}
-            />
+            >
+                {!wallpaper && (
+                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black via-gray-900 to-white" />
+                )}
+            </div>
             <div className="absolute top-0 left-0 w-full h-full backdrop-blur-sm bg-opacity-10" />
             <div className="flex z-10 relative">
                 <Sidebar setIsNavPanelOpen={setIsNavPanelOpen} />
@@ -110,6 +121,7 @@ const Layout = ({ filter, setFilter, setIsComposeOpen }) => {
                         </div>
                         <div className="flex-grow">
                             <Outlet />
+                            <BackgroundChanger setWallpaper={setWallpaper} />
                         </div>
                     </div>
                 </div>

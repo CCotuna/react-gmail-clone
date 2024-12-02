@@ -38,7 +38,7 @@ function Navigation() {
                     </div>
                 </Link>
                 <div className="flex items-center w-[36rem]">
-                    <div className="flex items-center bg-white bg-opacity-30 rounded-full w-full max-w-2xl px-4 py-3 text-white">
+                    <div className="flex items-center bg-white bg-opacity-50 rounded-full w-full max-w-2xl px-4 py-3 text-white">
                         <span className="cursor-pointer">
                             <IoSearch className="text-xl" />
                         </span>
