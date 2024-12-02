@@ -184,13 +184,12 @@ function Inbox({ filter, isComposeOpen, setIsComposeOpen, isSettingsOpen }) {
                   </span>
                   <div className='ml-6 flex text-sm'>
                     <div className={`font-medium w-full truncate flex ${isSettingsOpen ? 'gap-1' : 'gap-2'}`}>
-                      <span className={`truncate ${isSettingsOpen ? 'max-w-72' : 'max-w-96'}`}>
+                      <span className={`truncate ${isSettingsOpen ? 'max-w-48 2xl:max-w-72' : 'max-w-48'}`}>
                         {email.subject}
                       </span>
                       -
-                      <span className={`truncate font-extralight ${isSettingsOpen ? 'max-w-24 2xl:max-w-48' : 'max-w-36 2xl:max-w-96'}`}>
+                      <span className={`truncate font-extralight ${isSettingsOpen ? 'max-w-48 2xl:max-w-48' : 'max-w-36 2xl:max-w-96'}`}>
                         {email.content}
-                        
                       </span>
                     </div>
                   </div>
