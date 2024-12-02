@@ -1,4 +1,4 @@
-import { getDatabase, ref, set, onValue } from 'firebase/database';
+import { getDatabase, ref, set, get, onValue } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 import app from '../../firebase/firebaseConfig';
 
@@ -23,14 +23,13 @@ export const saveBackground = async (path) => {
     }
 };
 
-export const loadBackground = async (setWallpaper, defaultBackground) => {
+export const loadBackground = async (setWallpaper) => {
     try {
         const auth = getAuth();
         const user = auth.currentUser;
 
         if (!user) {
             console.error('User not authenticated.');
-            setWallpaper(defaultBackground);
             return;
         }
 

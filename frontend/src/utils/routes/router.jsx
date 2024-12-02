@@ -36,7 +36,7 @@ const Router = () => {
             setUser(currentUser);
             setAuthChecked(true);
             if (currentUser) {
-                loadBackground(setWallpaper, DefaultBackground);
+                loadBackground(setWallpaper);
             }
         });
 
