@@ -18,6 +18,7 @@ import DefaultBackground from '../../assets/images/backgrounds/tempBg8.jpg';
 import Home from '../../pages/Home.jsx'
 import ChatList from '../../components/ChatList.jsx';
 import { loadBackground } from '../background/backgroundFunctions.jsx';
+import Settings from '../../components/ui/Settings.jsx';
 
 const Router = () => {
     const [user, setUser] = useState(null);
@@ -26,6 +27,7 @@ const Router = () => {
     const [authChecked, setAuthChecked] = useState(false);
     const [isComposeOpen, setIsComposeOpen] = useState(false);
     const [wallpaper, setWallpaper] = useState(DefaultBackground);
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
     useEffect(() => {
         const introTimer = setTimeout(() => {
@@ -64,10 +66,10 @@ const Router = () => {
 
             <Route
                 path="/gmail"
-                element={user ? <Layout filter={filter} setFilter={setFilter} isComposeOpen={isComposeOpen} setIsComposeOpen={setIsComposeOpen} wallpaper={wallpaper} setWallpaper={setWallpaper} /> : <Navigate to="/login" />}
+                element={user ? <Layout filter={filter} setFilter={setFilter} isComposeOpen={isComposeOpen} setIsComposeOpen={setIsComposeOpen} wallpaper={wallpaper} setWallpaper={setWallpaper} isSettingsOpen={isSettingsOpen} setIsSettingsOpen={setIsSettingsOpen} /> : <Navigate to="/login" />}
             >
                 <Route index element={<Inbox filter={filter} isComposeOpen={isComposeOpen} setIsComposeOpen={setIsComposeOpen} />} />
-                <Route path="mail" element={<Inbox filter={filter} isComposeOpen={isComposeOpen} setIsComposeOpen={setIsComposeOpen} />} />
+                <Route path="mail" element={<Inbox filter={filter} isComposeOpen={isComposeOpen} setIsComposeOpen={setIsComposeOpen} isSettingsOpen={isSettingsOpen} />} />
                 <Route path="mail/:emailId" element={<Email />} />
                 <Route path="chat" element={<ChatList />} />
                 <Route path="chat/:conversationId" element={<Chat />} />
@@ -77,7 +79,7 @@ const Router = () => {
     );
 };
 
-const Layout = ({ filter, setFilter, setIsComposeOpen, wallpaper, setWallpaper }) => {
+const Layout = ({ filter, setFilter, setIsComposeOpen, wallpaper, setWallpaper, isSettingsOpen, setIsSettingsOpen }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [isNavPanelOpen, setIsNavPanelOpen] = useState(false);
 
@@ -112,7 +114,7 @@ const Layout = ({ filter, setFilter, setIsComposeOpen, wallpaper, setWallpaper }
             <div className="flex z-10 relative">
                 <Sidebar setIsNavPanelOpen={setIsNavPanelOpen} />
                 <div className="flex-grow ms-4 me-2">
-                    <Navigation />
+                    <Navigation setIsSettingsOpen={setIsSettingsOpen} />
                     <div className="flex mt-2">
                         <div
                             className={`transition-all duration-200 ease-in-out ${isNavPanelOpen ? 'w-64' : 'w-0'
@@ -121,7 +123,10 @@ const Layout = ({ filter, setFilter, setIsComposeOpen, wallpaper, setWallpaper }
                         </div>
                         <div className="flex-grow">
                             <Outlet />
-                            <BackgroundChanger setWallpaper={setWallpaper} />
+                        </div>
+                        <div className={`${isSettingsOpen ? 'w-64' : 'w-0'
+                            } overflow-hidden`}>
+                            <Settings setWallpaper={setWallpaper} />
                         </div>
                     </div>
                 </div>

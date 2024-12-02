@@ -15,7 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 import UserProfile from "../../ui/UserProfile";
 
 
-function Navigation() {
+function Navigation({ setIsSettingsOpen}) {
     const [isGoogleAppsOpen, setIsGoogleAppsOpen] = useState(false);
     const [isUserProfileOpen, setIsUserProfileOpen] = useState(false);
     const navigate = useNavigate();
@@ -65,7 +65,7 @@ function Navigation() {
                     <RiQuestionLine />
                     <span className="absolute -inset-2 rounded-full bg-gray-200 bg-opacity-20 scale-0 group-hover:scale-100 transition-transform duration-200 ease-in-out"></span>
                 </div>
-                <div className="relative group text-2xl cursor-pointer rounded-full">
+                <div className="relative group text-2xl cursor-pointer rounded-full" onClick={() => setIsSettingsOpen(prev => !prev)}>
                     <AiFillSetting />
                     <span className="absolute -inset-2 rounded-full bg-gray-200 bg-opacity-20 scale-0 group-hover:scale-100 transition-transform duration-200 ease-in-out"></span>
                 </div>

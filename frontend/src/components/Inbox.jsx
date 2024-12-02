@@ -16,7 +16,7 @@ import { toggleEmailField, permanentlyDeleteEmail } from "../utils/emails/emailF
 
 import ComposeBox from "./ComposeBox";
 
-function Inbox({ filter, isComposeOpen, setIsComposeOpen }) {
+function Inbox({ filter, isComposeOpen, setIsComposeOpen, isSettingsOpen }) {
   const [emails, setEmails] = useState([]);
   const [filteredEmails, setFilteredEmails] = useState([]);
   const [hoveredEmail, setHoveredEmail] = useState(null);
@@ -182,13 +182,18 @@ function Inbox({ filter, isComposeOpen, setIsComposeOpen }) {
                   <span className="ml-2 text-sm font-semibold w-48 truncate">
                     {email.sender}
                   </span>
-                  <div className="ml-6 flex text-sm">
-                    <div className="font-medium w-full truncate flex">
-                      <span className="truncate max-w-96">{email.subject}</span> - <span className="max-w-36 2xl:max-w-96 truncate font-extralight">
+                  <div className='ml-6 flex text-sm'>
+                    <div className={`font-medium w-full truncate flex ${isSettingsOpen ? 'gap-1' : 'gap-2'}`}>
+                      <span className={`truncate ${isSettingsOpen ? 'max-w-72' : 'max-w-96'}`}>
+                        {email.subject}
+                      </span>
+                      -
+                      <span className={`truncate font-extralight ${isSettingsOpen ? 'max-w-24 2xl:max-w-48' : 'max-w-36 2xl:max-w-96'}`}>
                         {email.content}
                       </span>
                     </div>
                   </div>
+
                 </Link>
               </div>
               <div className=" ml-6 text-sm text-black">
