@@ -190,6 +190,7 @@ function Inbox({ filter, isComposeOpen, setIsComposeOpen, isSettingsOpen }) {
                       -
                       <span className={`truncate font-extralight ${isSettingsOpen ? 'max-w-24 2xl:max-w-48' : 'max-w-36 2xl:max-w-96'}`}>
                         {email.content}
+                        
                       </span>
                     </div>
                   </div>
