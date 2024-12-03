@@ -23,7 +23,7 @@ export const saveBackground = async (path) => {
     }
 };
 
-export const loadBackground = async (setWallpaper) => {
+export const loadBackground = async (setWallpaper, defaultBackground) => {
     try {
         const auth = getAuth();
         const user = auth.currentUser;

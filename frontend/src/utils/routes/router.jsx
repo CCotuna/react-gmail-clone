@@ -13,7 +13,7 @@ import Email from '../../components/Email';
 import NavigationPanel from '../../components/layout/navigation/NavigationPanel';
 import BackgroundChanger from '../background/backgroundChanger.jsx';
 
-import DefaultBackground from '../../assets/images/backgrounds/tempBg8.jpg';
+import defaultBackground from '../../assets/images/backgrounds/tempBg8.jpg';
 
 import Home from '../../pages/Home.jsx'
 import ChatList from '../../components/ChatList.jsx';
@@ -26,7 +26,7 @@ const Router = () => {
     const [introComplete, setIntroComplete] = useState(false);
     const [authChecked, setAuthChecked] = useState(false);
     const [isComposeOpen, setIsComposeOpen] = useState(false);
-    const [wallpaper, setWallpaper] = useState(DefaultBackground);
+    const [wallpaper, setWallpaper] = useState(defaultBackground);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
     useEffect(() => {
@@ -38,7 +38,7 @@ const Router = () => {
             setUser(currentUser);
             setAuthChecked(true);
             if (currentUser) {
-                loadBackground(setWallpaper);
+                loadBackground(setWallpaper, defaultBackground);
             }
         });
 
