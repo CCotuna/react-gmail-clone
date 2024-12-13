@@ -16,7 +16,7 @@ import defaultBackground from '../../assets/images/backgrounds/tempBg8.jpg';
 
 import Home from '../../pages/Home.jsx'
 import ChatList from '../../components/ChatList.jsx';
-import { loadBackground } from '../background/backgroundFunctions.jsx';
+import { loadBackground } from '@/utils/background/backgroundFunctions';
 import Settings from '../../components/ui/Settings.jsx';
 
 const Router = () => {
