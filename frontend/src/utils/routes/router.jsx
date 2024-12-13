@@ -11,7 +11,6 @@ import Inbox from '../../components/Inbox';
 import Chat from '../../components/Chat';
 import Email from '../../components/Email';
 import NavigationPanel from '../../components/layout/navigation/NavigationPanel';
-import BackgroundChanger from '../background/backgroundChanger.jsx';
 
 import defaultBackground from '../../assets/images/backgrounds/tempBg8.jpg';
 
@@ -29,6 +28,8 @@ const Router = () => {
     const [wallpaper, setWallpaper] = useState(defaultBackground);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
+    console.log(defaultBackground, 'wallpaper');
+
     useEffect(() => {
         const introTimer = setTimeout(() => {
             setIntroComplete(true);
@@ -39,6 +40,8 @@ const Router = () => {
             setAuthChecked(true);
             if (currentUser) {
                 loadBackground(setWallpaper, defaultBackground);
+            } else {
+                setWallpaper(defaultBackground);
             }
         });
 
