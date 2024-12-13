@@ -12,16 +12,19 @@ export const saveBackground = async (path) => {
             return;
         }
 
+        const cleanedPath = path.replace(/^\/?src\//, '');
+
         const formattedEmail = user.email.replace(/\./g, '_').replace('@', '-');
         const db = getDatabase(app);
         const backgroundRef = ref(db, `users/${formattedEmail}/background`);
 
-        await set(backgroundRef, path);
-        console.log('Background saved successfully:', path);
+        await set(backgroundRef, cleanedPath);
+        console.log('Background saved successfully:', cleanedPath);
     } catch (error) {
         console.error('Error saving background:', error);
     }
 };
+
 
 export const loadBackground = async (setWallpaper, defaultBackground) => {
     try {
@@ -37,13 +40,17 @@ export const loadBackground = async (setWallpaper, defaultBackground) => {
         const db = getDatabase(app);
         const backgroundRef = ref(db, `users/${formattedEmail}/background`);
 
+        console.log('Background ref:', backgroundRef);
+
         onValue(backgroundRef, (snapshot) => {
+            console.log('Background snapshot:', snapshot.val());
             if (snapshot.exists()) {
-              setWallpaper(snapshot.val()); 
+                const savedPath = snapshot.val();
+                setWallpaper(savedPath.startsWith('assets') ? `/${savedPath}` : defaultBackground);
             } else {
-              setWallpaper(defaultBackground);
+                setWallpaper(defaultBackground);
             }
-          });
+        });
     } catch (error) {
         console.error('Error loading background:', error);
         setWallpaper(defaultBackground);

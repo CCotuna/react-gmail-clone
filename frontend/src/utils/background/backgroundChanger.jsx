@@ -13,6 +13,7 @@ const BackgroundChanger = ({ setWallpaper }) => {
   const wallpaperOptions = [tempBg5, tempBg6, tempBg7, tempBg8, tempBg9, tempBg10, tempBg11];
 
   const handleBackgroundChange = (bg) => {
+    console.log("Background changed:", bg);
     setWallpaper(bg);
     saveBackground(bg);
   };
