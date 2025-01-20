@@ -14,6 +14,8 @@ import app from "../firebase/firebaseConfig";
 import { Link, useLocation } from 'react-router-dom';
 import { toggleEmailField, permanentlyDeleteEmail } from "../utils/emails/emailFunctions";
 
+import { formatEmailDate } from "../utils/date/formatDate";
+
 function Inbox({ filter, isSettingsOpen }) {
   const [emails, setEmails] = useState([]);
   const [filteredEmails, setFilteredEmails] = useState([]);
@@ -96,24 +98,7 @@ function Inbox({ filter, isSettingsOpen }) {
     setFilteredEmails(filtered);
   }, [filter, emails, auth.currentUser?.email]);
 
-  const formatEmailDate = (emailDate) => {
-    const currentYear = new Date().getFullYear();
-    const dateObj = new Date(emailDate);
-    const emailYear = dateObj.getFullYear();
-
-    if (emailYear === currentYear) {
-      return dateObj.toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "short",
-      });
-    } else {
-      return dateObj.toLocaleDateString("en-GB", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      });
-    }
-  };
+  
 
   return (
     <div className="flex flex-col h-[calc(100vh-5rem)] p-6 bg-gray-50 rounded-2xl">

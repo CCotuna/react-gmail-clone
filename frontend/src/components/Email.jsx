@@ -11,6 +11,8 @@ import { MdLabelImportant, MdStarBorder, MdStar } from "react-icons/md";
 import { IoReturnUpForwardOutline } from "react-icons/io5";
 import { IoReturnUpBack } from "react-icons/io5";
 
+import { formatEmailTimestamp } from '../utils/date/formatDate';
+
 function Email() {
   const { emailId } = useParams();
   const [emailDetails, setEmailDetails] = useState(null);
@@ -38,7 +40,7 @@ function Email() {
 
   if (!emailDetails) return <div>Loading...</div>;
 
-  console.log(emailDetails, 'emailDetails');
+  const formattedTimestamp = formatEmailTimestamp(emailDetails.timestamp)
 
   return (
     <div className="flex flex-col h-[calc(100vh-5rem)] p-6 bg-gray-50 rounded-2xl">
@@ -48,9 +50,6 @@ function Email() {
             <IoArrowBackOutline />
           </Link>
         </div>
-        <div>
-          <span>Alte icons care vor functiona pe baza id din params</span>
-        </div>
       </div>
 
       <div className='flex items-center ms-16 text-2xl justify-between'>
@@ -58,9 +57,6 @@ function Email() {
           <h1>{emailDetails.subject}</h1>
           <p>{emailDetails.important ? (<MdLabelImportant className="text-yellow-500" />) : ''}</p>
           <p>{emailDetails.sentByMe ? '' : (<span className='text-sm bg-gray-300 text-black'>Mesaje Primite</span>)}</p>
-        </div>
-        <div className='flex'>
-          <span>Icons</span>
         </div>
       </div>
 
@@ -72,8 +68,9 @@ function Email() {
             <div>catre {emailDetails.sentByMe ? (<span>{emailDetails.receiverEmail}</span>) : 'eu'}</div>
           </div>
         </div>
-        <div className='text-2xl'>
-          <p>{emailDetails.star ? (<MdStar className="text-yellow-500" />) : (<MdStarBorder />)}</p>
+        <div className='flex items-center text-md'>
+          <p>{ formattedTimestamp }</p>
+          <p>{emailDetails.star ? (<MdStar className="text-yellow-500 text-xl" />) : (<MdStarBorder className="text-xl" />)}</p>
         </div>
       </div>
 
