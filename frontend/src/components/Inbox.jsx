@@ -45,7 +45,7 @@ function Inbox({ filter, isSettingsOpen }) {
                 receiver: messageData.receiverEmail,
                 subject: messageData.subject,
                 message: messageData.message,
-                timestamp: new Date(messageData.timestamp).toLocaleString(),
+                timestamp: messageData.timestamp,
                 content: messageData.message,
                 read: messageData.read,
                 checked: messageData.checked,
@@ -57,6 +57,8 @@ function Inbox({ filter, isSettingsOpen }) {
               });
             }
           });
+
+          messages.sort((a, b) => b.timestamp - a.timestamp);
 
           setEmails(messages);
           setFilteredEmails(messages);
@@ -98,7 +100,7 @@ function Inbox({ filter, isSettingsOpen }) {
     setFilteredEmails(filtered);
   }, [filter, emails, auth.currentUser?.email]);
 
-  
+
 
   return (
     <div className="flex flex-col h-[calc(100vh-5rem)] p-6 bg-gray-50 rounded-2xl">
@@ -174,8 +176,8 @@ function Inbox({ filter, isSettingsOpen }) {
 
                 </Link>
               </div>
-              <div className=" ml-6 text-sm text-black">
-                {!hoveredEmail && (
+              <div className="ml-6 text-sm text-black">
+                {hoveredEmail !== email.id && (
                   <span>{formatEmailDate(email.timestamp)}</span>
                 )}
                 {hoveredEmail === email.id && (
@@ -203,7 +205,6 @@ function Inbox({ filter, isSettingsOpen }) {
                       onClick={() => toggleEmailField(email.id, 'read', email.read, setEmails, emails)}
                     >
                       <HiOutlineMailOpen />
-                      {/* <MdOutlineMarkEmailUnread /> */}
                     </span>
                   </div>
                 )}
