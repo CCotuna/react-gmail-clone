@@ -19,7 +19,6 @@ export const saveBackground = async (path) => {
         const backgroundRef = ref(db, `users/${formattedEmail}/background`);
 
         await set(backgroundRef, cleanedPath);
-        console.log('Background saved successfully:', cleanedPath);
     } catch (error) {
         console.error('Error saving background:', error);
     }
@@ -40,10 +39,7 @@ export const loadBackground = async (setWallpaper, defaultBackground) => {
         const db = getDatabase(app);
         const backgroundRef = ref(db, `users/${formattedEmail}/background`);
 
-        console.log('Background ref:', backgroundRef);
-
         onValue(backgroundRef, (snapshot) => {
-            console.log('Background snapshot:', snapshot.val());
             if (snapshot.exists()) {
                 const savedPath = snapshot.val();
                 setWallpaper(savedPath.startsWith('assets') ? `/${savedPath}` : defaultBackground);

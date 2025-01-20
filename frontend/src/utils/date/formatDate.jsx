@@ -49,3 +49,11 @@ export function formatEmailTimestamp(timestamp) {
     return `${dayOfWeek}, ${day} ${month}, ${time} (${timeAgo})`;
   }
   
+  export function formatChatDate(timestamp) {
+    const date = new Date(timestamp);
+    const options = {
+      day: '2-digit',
+      month: 'short',
+    };
+    return date.toLocaleDateString('ro-RO', options);
+  }

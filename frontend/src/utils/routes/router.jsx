@@ -30,8 +30,6 @@ const Router = () => {
     const [wallpaper, setWallpaper] = useState(defaultBackground);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-    console.log(defaultBackground, 'wallpaper');
-
     useEffect(() => {
         const introTimer = setTimeout(() => {
             setIntroComplete(true);
@@ -87,8 +85,6 @@ const Router = () => {
 const Layout = ({ filter, setFilter, isComposeOpen, setIsComposeOpen, wallpaper, setWallpaper, isSettingsOpen, setIsSettingsOpen }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [isNavPanelOpen, setIsNavPanelOpen] = useState(false);
-
-    console.log(wallpaper)
 
     useEffect(() => {
         const timer = setTimeout(() => {

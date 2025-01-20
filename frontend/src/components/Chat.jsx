@@ -5,8 +5,8 @@ import app from '../firebase/firebaseConfig';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-const Chat = () => {
-  const { conversationId } = useParams();
+const Chat = ({ conversationId}) => {
+  // const { conversationId } = useParams();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const auth = getAuth();
@@ -68,9 +68,9 @@ const Chat = () => {
   };
 
   return (
-    <div className="flex flex-col space-y-4 max-w-lg">
-      <Link to={'/gmail/chat'} className="text-white">Back to chats</Link>
-      <div className="p-4 bg-gray-800 rounded-lg text-white space-y-2">
+    <div className="flex flex-col rounded-2xl bg-white h-[calc(100vh-5rem)]">
+      {/* <Link to={'/gmail/chat'} className="text-white">Back to chats</Link> */}
+      <div className="p-4  rounded-lg text-white space-y-2">
         {messages.map((message) => {
           const isCurrentUser = message.sender === auth.currentUser?.email.replace(/\./g, '_').replace('@', '-');
           return (
