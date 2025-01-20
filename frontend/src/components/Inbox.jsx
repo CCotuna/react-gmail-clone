@@ -14,9 +14,7 @@ import app from "../firebase/firebaseConfig";
 import { Link, useLocation } from 'react-router-dom';
 import { toggleEmailField, permanentlyDeleteEmail } from "../utils/emails/emailFunctions";
 
-import ComposeBox from "./ComposeBox";
-
-function Inbox({ filter, isComposeOpen, setIsComposeOpen, isSettingsOpen }) {
+function Inbox({ filter, isSettingsOpen }) {
   const [emails, setEmails] = useState([]);
   const [filteredEmails, setFilteredEmails] = useState([]);
   const [hoveredEmail, setHoveredEmail] = useState(null);
@@ -119,11 +117,6 @@ function Inbox({ filter, isComposeOpen, setIsComposeOpen, isSettingsOpen }) {
 
   return (
     <div className="flex flex-col h-[calc(100vh-5rem)] p-6 bg-gray-50 rounded-2xl">
-      {isComposeOpen && (
-        <div className="absolute bottom-4 right-4">
-          <ComposeBox onClose={() => setIsComposeOpen(false)} />
-        </div>
-      )}
       <div className="flex justify-between mb-2">
         <div className="flex items-center">
           <span className="cursor-pointer flex items-center">

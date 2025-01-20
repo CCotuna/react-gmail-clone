@@ -19,6 +19,8 @@ import ChatList from '../../components/ChatList.jsx';
 import { loadBackground } from '@/utils/background/backgroundFunctions';
 import Settings from '../../components/ui/Settings.jsx';
 
+import ComposeBox from '../../components/ComposeBox.jsx';
+
 const Router = () => {
     const [user, setUser] = useState(null);
     const [filter, setFilter] = useState('all');
@@ -82,7 +84,7 @@ const Router = () => {
     );
 };
 
-const Layout = ({ filter, setFilter, setIsComposeOpen, wallpaper, setWallpaper, isSettingsOpen, setIsSettingsOpen }) => {
+const Layout = ({ filter, setFilter, isComposeOpen, setIsComposeOpen, wallpaper, setWallpaper, isSettingsOpen, setIsSettingsOpen }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [isNavPanelOpen, setIsNavPanelOpen] = useState(false);
 
@@ -134,6 +136,11 @@ const Layout = ({ filter, setFilter, setIsComposeOpen, wallpaper, setWallpaper, 
                     </div>
                 </div>
             </div>
+            {isComposeOpen && (
+                <div className="absolute bottom-4 right-4 z-40">
+                    <ComposeBox onClose={() => setIsComposeOpen(false)} />
+                </div>
+            )}
         </div>
     );
 };
