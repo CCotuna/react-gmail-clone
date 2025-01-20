@@ -134,12 +134,12 @@ const ChatList = () => {
                 </div>
             </div>
 
-            <div className="w-2/4 ps-5">
+            <div className="w-2/4 ps-5 relative">
                 {selectedConversationId ? (
                     <div>
                         <button
                             onClick={handleCloseChat}
-                            className="mb-4 p-2 bg-red-500 text-white rounded-lg"
+                            className="mb-4 p-2 absolute left-1/2 top-2 transform -translate-x-1/2 bg-red-500 text-white rounded-lg"
                         >
                             Închide Chat
                         </button>

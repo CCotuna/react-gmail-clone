@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { getDatabase, ref, onValue, push, set } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 import app from '../firebase/firebaseConfig';
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
-const Chat = ({ conversationId}) => {
-  // const { conversationId } = useParams();
+const Chat = ({ conversationId }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const auth = getAuth();
+
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     const db = getDatabase(app);
@@ -21,11 +20,14 @@ const Chat = ({ conversationId}) => {
       }
     });
 
-    return () => {
-
-    };
+    return () => unsubscribe();
   }, [conversationId]);
 
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]); 
 
   const sendMessage = async () => {
     if (!newMessage.trim()) return;
@@ -34,7 +36,6 @@ const Chat = ({ conversationId}) => {
     const userEmail = auth.currentUser?.email;
     const formattedEmail = userEmail.replace(/\./g, '_').replace('@', '-');
     const newMessageRef = push(ref(db, `conversations/${conversationId}/messages`));
-
 
     const timestamp = Date.now();
 
@@ -47,7 +48,6 @@ const Chat = ({ conversationId}) => {
 
     setNewMessage('');
   };
-
 
   const formatTimestamp = (timestamp) => {
     const date = new Date(timestamp);
@@ -68,17 +68,14 @@ const Chat = ({ conversationId}) => {
   };
 
   return (
-    <div className="flex flex-col rounded-2xl bg-white h-[calc(100vh-5rem)]">
-      {/* <Link to={'/gmail/chat'} className="text-white">Back to chats</Link> */}
-      <div className="p-4  rounded-lg text-white space-y-2">
+    <div className="flex flex-col h-[calc(100vh-5rem)] bg-white">
+      <div className="flex-1 overflow-y-auto p-4 space-y-2">
         {messages.map((message) => {
           const isCurrentUser = message.sender === auth.currentUser?.email.replace(/\./g, '_').replace('@', '-');
           return (
             <div
               key={message.id}
-              className={`p-2 rounded-lg ${
-                isCurrentUser ? 'bg-gray-500 self-end text-right' : 'bg-gray-700 self-start text-left'
-              }`}
+              className={`p-2 rounded-lg ${isCurrentUser ? 'bg-gray-500 self-end text-right' : 'bg-gray-700 self-start text-left'}`}
             >
               <p className="font-semibold">{formatEmail(message.sender)}</p>
               <p>{message.content}</p>
@@ -86,8 +83,10 @@ const Chat = ({ conversationId}) => {
             </div>
           );
         })}
+        <div ref={messagesEndRef} />
       </div>
-      <div className="flex space-x-4 p-4 bg-gray-700 rounded-lg">
+
+      <div className="p-4 bg-gray-700 rounded-lg flex items-center">
         <input
           type="text"
           value={newMessage}
@@ -104,7 +103,6 @@ const Chat = ({ conversationId}) => {
       </div>
     </div>
   );
-  
 };
 
 export default Chat;
