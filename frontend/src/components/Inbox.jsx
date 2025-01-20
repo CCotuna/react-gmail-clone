@@ -117,6 +117,11 @@ function Inbox({ filter, isSettingsOpen }) {
       </div>
 
       <div className="flex-1 overflow-y-auto">
+        {filteredEmails.length === 0 ? (
+          <div className="flex justify-center text-xl text-gray-400 border-b pb-2">
+            Nu există emailuri în inbox pentru acest filtru.
+          </div>
+        ) : (
         <ul>
           {filteredEmails.map((email) => (
             <li
@@ -212,6 +217,7 @@ function Inbox({ filter, isSettingsOpen }) {
             </li>
           ))}
         </ul>
+        )}
       </div>
     </div>
   );
