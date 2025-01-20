@@ -62,7 +62,7 @@ function Email() {
 
       <div className='flex items-center justify-between'>
         <div className='flex'>
-          <span className='py-2 px-5 rounded-full flex items-center justify-center bg-green-500 text-white'>C</span>
+          <span className='py-2 px-5 rounded-full flex items-center justify-center bg-red-800 text-white'>C</span>
           <div className='flex flex-col ms-3'>
             <div className='font-semibold'>{emailDetails.senderEmail}</div>
             <div>catre {emailDetails.sentByMe ? (<span>{emailDetails.receiverEmail}</span>) : 'eu'}</div>
@@ -75,7 +75,7 @@ function Email() {
       </div>
 
       <div className='ms-16 mt-6 max-w-5xl'>
-        <p>{emailDetails.message}</p>
+        <p className='break-words whitespace-pre-wrap'>{emailDetails.message}</p>
       </div>
 
       <div className='ms-16 mt-6 flex items-center space-x-5'>

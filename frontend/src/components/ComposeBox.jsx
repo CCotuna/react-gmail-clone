@@ -5,17 +5,17 @@ import { IoMdClose } from "react-icons/io";
 
 function ComposeBox({ onClose }) {
   return (
-    <div className="compose-box bg-white p-4 shadow-md rounded-md">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-bold">Compose</h2>
+    <div className="compose-box bg-white rounded-t-lg shadow-md">
+      <div className="flex justify-between items-center p-2 px-3 rounded-t-lg bg-gray-200">
+        <h2 className="text-sm">Mesaj nou</h2>
         <button
-          className="text-red-500 hover:text-red-700 font-bold text-2xl"
+          className="hover:text-red-500 font-bold text-md"
           onClick={onClose}
         >
           <IoMdClose />
         </button>
       </div>
-      <ComposeEmail />
+      <ComposeEmail onClose={onClose} />
     </div>
   );
 };

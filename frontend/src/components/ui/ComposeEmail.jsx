@@ -3,7 +3,7 @@ import app from '../../firebase/firebaseConfig';
 import { getDatabase, ref, set, push } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 
-function ComposeEmail() {
+function ComposeEmail({ onClose }) {
     const [inputValue1, setInputValue1] = useState('');
     const [inputValue2, setInputValue2] = useState('');
     const [subject, setSubject] = useState('');
@@ -71,43 +71,41 @@ function ComposeEmail() {
             });
 
             alert('Message sent successfully');
+            onClose();
         } else {
             alert('You must be logged in to send a message');
         }
     };
 
     return (
-        <div className="flex flex-col p-6 bg-gray-50 rounded-2xl">
+        <div className="flex flex-col p-2 px-3">
             <div className='flex flex-col space-y-2 w-96 text-black'>
-                <label>Subject</label>
+           <div className='flex space-x-2 border-b'> <label>Către</label>
+                <input
+                    type="email"
+                    className='text-black w-full px-1 focus:outline-none'
+                    value={inputValue2}
+                    onChange={(e) => setInputValue2(e.target.value)}
+                /></div>
+               <div className='flex items-center space-x-2 border-b'>
+               {/* <label className='text-sm text-gray-400'>Subiect</label> */}
                 <input
                     type="text"
-                    className='text-black border-2 border-gray-300 rounded-lg p-2'
+                    className='text-black w-full focus:outline-none'
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
-                    placeholder="Enter subject"
+                    placeholder='Subiect'
                 />
-                <br />
-                <label>Message</label>
+               </div>
                 <textarea
                     type="text"
-                    className='text-black border-2 h-64 border-gray-300 rounded-lg p-2'
+                    className='text-black h-72 focus:outline-none'
                     value={inputValue1}
                     onChange={(e) => setInputValue1(e.target.value)}
                     placeholder="Enter your message"
                 />
-                <br />
-                <label>Receiver Email</label>
-                <input
-                    type="email"
-                    className='text-black border-2 border-gray-300 rounded-lg p-2'
-                    value={inputValue2}
-                    onChange={(e) => setInputValue2(e.target.value)}
-                    placeholder="Enter receiver's email"
-                />
-                <br />
-                <div className='flex justify-center'>
-                    <button className='bg-gray-200 p-2 rounded-lg w-fit' onClick={saveData}>Send Message</button>
+                <div className='flex'>
+                    <button className='bg-blue-600 text-white p-2 px-5 rounded-full w-fit' onClick={saveData}>Trimite</button>
                 </div>
             </div>
         </div>
