@@ -116,9 +116,12 @@ const ChatList = () => {
 
                                         {conversation.lastMessage && (
                                             <p className="text-sm text-black mt-1">
-                                                {conversation.lastMessage.content}
+                                                {conversation.lastMessage.content && conversation.lastMessage.content.length > 60
+                                                    ? conversation.lastMessage.content.substring(0, 60) + "..."
+                                                    : conversation.lastMessage.content}
                                             </p>
                                         )}
+
                                     </div>
                                     {conversation.lastMessage && conversation.lastMessage.timestamp && (
                                         <p className="text-sm text-gray-400">
@@ -139,7 +142,7 @@ const ChatList = () => {
                     <div>
                         <button
                             onClick={handleCloseChat}
-                            className="mb-4 p-2 absolute left-1/2 top-2 transform -translate-x-1/2 bg-red-500 text-white rounded-lg"
+                            className="mb-4 p-2 absolute left-1/2 top-2 transform -translate-x-1/2 bg-red-800 text-white rounded-lg"
                         >
                             Închide Chat
                         </button>

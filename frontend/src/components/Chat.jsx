@@ -75,10 +75,11 @@ const Chat = ({ conversationId }) => {
           return (
             <div
               key={message.id}
-              className={`p-2 rounded-lg ${isCurrentUser ? 'bg-gray-500 self-end text-right' : 'bg-gray-700 self-start text-left'}`}
+              className={`p-2 rounded-lg ${isCurrentUser ? 'border-b self-start text-right' : 'border-b self-start text-left'}`}
             >
+              
               <p className="font-semibold">{formatEmail(message.sender)}</p>
-              <p>{message.content}</p>
+              <p className='bg-gray-100 break-words whitespace-pre-wrap'>{message.content}</p>
               <p className="text-gray-400 text-sm">{formatTimestamp(message.timestamp)}</p>
             </div>
           );
