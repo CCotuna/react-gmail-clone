@@ -27,7 +27,7 @@ const Chat = ({ conversationId }) => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [messages]); 
+  }, [messages]);
 
   const sendMessage = async () => {
     if (!newMessage.trim()) return;
@@ -68,18 +68,18 @@ const Chat = ({ conversationId }) => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-5rem)] bg-white">
-      <div className="flex-1 overflow-y-auto p-4 space-y-2">
+    <div className="flex flex-col rounded-2xl  h-[calc(100vh-5rem)] bg-white">
+      <div className="flex-1 overflow-y-auto p-4 space-y-2 pt-10">
         {messages.map((message) => {
           const isCurrentUser = message.sender === auth.currentUser?.email.replace(/\./g, '_').replace('@', '-');
           return (
             <div
               key={message.id}
-              className={`p-2 rounded-lg ${isCurrentUser ? 'border-b self-start text-right' : 'border-b self-start text-left'}`}
+              className={`p-2 rounded-lg ${isCurrentUser ? 'border-b self-end text-right' : 'border-b self-start text-left'}`}
             >
-              
+
               <p className="font-semibold">{formatEmail(message.sender)}</p>
-              <p className='bg-gray-100 break-words whitespace-pre-wrap'>{message.content}</p>
+              <p className='bg-gray-100 break-words max-w-full overflow-hidden text-ellipsis whitespace-pre-wrap'>{message.content}</p>
               <p className="text-gray-400 text-sm">{formatTimestamp(message.timestamp)}</p>
             </div>
           );
@@ -87,17 +87,23 @@ const Chat = ({ conversationId }) => {
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="p-4 bg-gray-700 rounded-lg flex items-center">
+      <div className="p-4 bg-white rounded-lg flex space-x-5 items-center">
         <input
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              sendMessage();
+            }
+          }}
           placeholder="Scrie un mesaj..."
-          className="p-2 rounded-lg flex-grow"
+          className="p-2 rounded-lg flex-grow focus:outline-none"
         />
         <button
           onClick={sendMessage}
-          className="p-2 bg-green-500 text-white rounded-lg"
+          className="p-2 bg-red-800 text-white rounded-lg "
         >
           Trimite
         </button>

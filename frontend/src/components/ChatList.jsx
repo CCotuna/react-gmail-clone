@@ -137,7 +137,7 @@ const ChatList = () => {
                 </div>
             </div>
 
-            <div className="w-2/4 ps-5 relative">
+            <div className="w-2/4 ps-2 relative">
                 {selectedConversationId ? (
                     <div>
                         <button
